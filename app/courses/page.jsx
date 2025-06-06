@@ -1,15 +1,56 @@
-"use client" ;
+"use client";
 import { useState } from 'react';
 import { ChevronDown, Filter, Star, Search } from 'lucide-react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import Newsletter from '../components/Newsletter';
+import Link from 'next/link';
+
+// Utility function to generate comprehensive URL-friendly slugs
+const generateSlug = (title, instructor, id) => {
+  // Clean the title
+  const cleanTitle = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim('-');
+  
+  // Clean the instructor name
+  const cleanInstructor = instructor
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim('-');
+  
+  // Combine title + instructor + id for uniqueness
+  return `${cleanTitle}-by-${cleanInstructor}-${id}`;
+};
+
+// Alternative: Shorter slug with just instructor last name
+const generateShortSlug = (title, instructor, id) => {
+  const cleanTitle = title
+    .toLowerCase()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-')
+    .trim('-');
+  
+  // Get last name only
+  const lastName = instructor.split(' ').pop()
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '');
+  
+  return `${cleanTitle}-${lastName}-${id}`;
+};
 
 // Sample course data - this would come from an API in a real application
 const allCourses = [
   {
     id: 1,
     title: "Financial Literacy Basics",
+    slug: generateShortSlug("Financial Literacy Basics", "Karim Alaoui", 1),
     description: "Learn the fundamentals of personal finance management and financial planning.",
     instructor: "Karim Alaoui",
     category: "Finance",
@@ -23,6 +64,7 @@ const allCourses = [
   {
     id: 2,
     title: "Investment Strategies",
+    slug: generateShortSlug("Investment Strategies", "Leila Haddioui", 2),
     description: "Master various investment techniques for long-term wealth building.",
     instructor: "Leila Haddioui",
     category: "Finance",
@@ -36,6 +78,7 @@ const allCourses = [
   {
     id: 3,
     title: "Full Stack Web Development",
+    slug: generateShortSlug("Full Stack Web Development", "Yasmine Benkiran", 3),
     description: "Comprehensive course covering frontend and backend web development.",
     instructor: "Yasmine Benkiran",
     category: "Web Development",
@@ -49,6 +92,7 @@ const allCourses = [
   {
     id: 4,
     title: "Frontend Development with React",
+    slug: generateShortSlug("Frontend Development with React", "Hassan Ouahbi", 4),
     description: "Learn to build modern, responsive user interfaces with React.",
     instructor: "Hassan Ouahbi",
     category: "Web Development",
@@ -62,6 +106,7 @@ const allCourses = [
   {
     id: 5,
     title: "Construction Management",
+    slug: generateShortSlug("Construction Management", "Omar Benjelloun", 5),
     description: "Master the principles of managing construction projects efficiently.",
     instructor: "Omar Benjelloun",
     category: "Construction",
@@ -75,6 +120,7 @@ const allCourses = [
   {
     id: 6,
     title: "UI/UX Design Fundamentals",
+    slug: generateShortSlug("UI/UX Design Fundamentals", "Nadia Elmaleh", 6),
     description: "Learn the principles of creating user-friendly digital experiences.",
     instructor: "Nadia Elmaleh",
     category: "Design",
@@ -88,6 +134,7 @@ const allCourses = [
   {
     id: 7,
     title: "Business Leadership",
+    slug: generateShortSlug("Business Leadership", "Tarik Idrissi", 7),
     description: "Develop essential leadership skills for managing teams and organizations.",
     instructor: "Tarik Idrissi",
     category: "Business",
@@ -101,6 +148,7 @@ const allCourses = [
   {
     id: 8,
     title: "Darija for Beginners",
+    slug: generateShortSlug("Darija for Beginners", "Samira Tazi", 8),
     description: "Learn the basics of Moroccan Darija for everyday communication.",
     instructor: "Samira Tazi",
     category: "Languages",
@@ -114,6 +162,7 @@ const allCourses = [
   {
     id: 9,
     title: "Sustainable Agriculture",
+    slug: generateShortSlug("Sustainable Agriculture", "Youssef Amrani", 9),
     description: "Learn modern farming techniques that promote sustainability.",
     instructor: "Youssef Amrani",
     category: "Agriculture",
@@ -127,6 +176,7 @@ const allCourses = [
   {
     id: 10,
     title: "First Aid & Emergency Response",
+    slug: generateShortSlug("First Aid & Emergency Response", "Dr. Amina Boutaleb", 10),
     description: "Essential knowledge for handling medical emergencies.",
     instructor: "Dr. Amina Boutaleb",
     category: "Healthcare",
@@ -140,6 +190,7 @@ const allCourses = [
   {
     id: 11,
     title: "Backend Development with Node.js",
+    slug: generateShortSlug("Backend Development with Node.js", "Mehdi Elouazzani", 11),
     description: "Build scalable server-side applications using Node.js and Express.",
     instructor: "Mehdi Elouazzani",
     category: "Web Development",
@@ -153,6 +204,7 @@ const allCourses = [
   {
     id: 12,
     title: "Digital Marketing Fundamentals",
+    slug: generateShortSlug("Digital Marketing Fundamentals", "Sofia Bennani", 12),
     description: "Learn the basics of promoting products and services online.",
     instructor: "Sofia Bennani",
     category: "Business",
@@ -233,6 +285,8 @@ export default function AllCoursesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
+      {/* Header */}
+      <Header />
    
       {/* Page Title */}
       <section className="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white py-12">
@@ -309,7 +363,7 @@ export default function AllCoursesPage() {
                   <div className="space-y-2">
                     <button
                       onClick={() => setSelectedLevel('')}
-                      className={`px-4 py-2 rounded-full text-sm font-medium ${
+                      className={`w-full px-4 py-2 rounded-full text-sm font-medium ${
                         selectedLevel === '' ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                       }`}
                     >
@@ -319,7 +373,7 @@ export default function AllCoursesPage() {
                       <button
                         key={index}
                         onClick={() => setSelectedLevel(level)}
-                        className={`px-4 py-2 rounded-full text-sm font-medium ${
+                        className={`w-full px-4 py-2 rounded-full text-sm font-medium ${
                           selectedLevel === level ? 'bg-emerald-600 text-white' : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                         }`}
                       >
@@ -380,17 +434,21 @@ export default function AllCoursesPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                   {filteredCourses.map((course) => (
                     <div key={course.id} className="bg-white rounded-lg overflow-hidden shadow hover:shadow-lg transition duration-200">
-                      <img 
-                        src={course.image} 
-                        alt={course.title} 
-                        className="w-full h-48 object-cover"
-                      />
+                      <Link href={`/courses/${course.slug}`}>
+                        <img 
+                          src={"/litdarija_logo_vector.svg"} 
+                          alt={course.title} 
+                          className="w-full h-48 object-cover cursor-pointer hover:opacity-90 transition-opacity"
+                        />
+                      </Link>
                       <div className="p-6">
                         <div className="flex items-center justify-between mb-2">
                           <span className="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded-full">{course.category}</span>
                           <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded-full">{course.level}</span>
                         </div>
-                        <h3 className="text-xl font-bold mb-2 text-gray-800">{course.title}</h3>
+                        <Link href={`/courses/${course.slug}`}>
+                          <h3 className="text-xl font-bold mb-2 text-gray-800 hover:text-emerald-600 transition-colors cursor-pointer">{course.title}</h3>
+                        </Link>
                         <p className="text-gray-600 text-sm mb-4 line-clamp-2">{course.description}</p>
                         <div className="flex items-center mb-2">
                           <span className="text-gray-600 text-sm">By </span>
@@ -406,9 +464,12 @@ export default function AllCoursesPage() {
                         </div>
                         <div className="flex items-center justify-between mt-4">
                           <span className="text-xl font-bold text-gray-800">{course.price} MAD</span>
-                          <button className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-md font-medium transition duration-200">
-                            Enroll Now
-                          </button>
+                          <Link 
+                            href={`/courses/${course.slug}`} 
+                            className="bg-emerald-600 hover:bg-emerald-700 text-white py-2 px-4 rounded-md font-medium transition duration-200"
+                          >
+                            View Course
+                          </Link>
                         </div>
                       </div>
                     </div>

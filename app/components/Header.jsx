@@ -19,7 +19,7 @@ export default function Header() {
             <Menu />
           </button>
           <Link href="/" className="text-2xl font-bold text-emerald-600">
-            Darija<span className="text-gray-800">Learn</span>
+            Lit<span className="text-gray-800">Darija</span>
           </Link>
         </div>
         
