@@ -2,102 +2,18 @@
 import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import SearchBar from "./components/SearchBar";
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+
 import Newsletter from "./components/Newsletter";
 import Image from "next/image";
+import { allcategories , featuredCourses } from "./data/data";
 
 // Static data with slug mapping
-const categories = [
-  {
-    name: "Finance",
-    slug: "finance",
-    icon: "💰",
-    description: "Accounting, Investment, Banking",
-    courseCount: 12,
-  },
-  {
-    name: "Web Development",
-    slug: "web-development",
-    icon: "💻",
-    description: "Frontend, Backend, Full Stack",
-    courseCount: 18,
-  },
-  {
-    name: "Construction",
-    slug: "construction",
-    icon: "🏗️",
-    description: "Architecture, Civil Engineering, Safety",
-    courseCount: 8,
-  },
-  {
-    name: "Design",
-    slug: "design",
-    icon: "🎨",
-    description: "UI/UX, Graphic Design, Branding",
-    courseCount: 15,
-  },
-  {
-    name: "Business",
-    slug: "business",
-    icon: "📊",
-    description: "Entrepreneurship, Marketing, Management",
-    courseCount: 10,
-  },
-  {
-    name: "Languages",
-    slug: "languages",
-    icon: "🗣️",
-    description: "Communication, Translation, Grammar",
-    courseCount: 7,
-  },
-  {
-    name: "Agriculture",
-    slug: "agriculture",
-    icon: "🌱",
-    description: "Farming, Irrigation, Sustainability",
-    courseCount: 6,
-  },
-  {
-    name: "Healthcare",
-    slug: "healthcare",
-    icon: "⚕️",
-    description: "First Aid, Nutrition, Public Health",
-    courseCount: 9,
-  },
-];
 
-const featuredCourses = [
-  {
-    title: "Financial Literacy basics",
-    instructor: "Karim Alaoui",
-    level: "Beginner",
-    rating: 4.8,
-    students: 1245,
-    image: "/api/placeholder/320/180",
-  },
-  {
-    title: "Full Stack Web Development",
-    instructor: "Yasmine Benkiran",
-    level: "Intermediate",
-    rating: 4.9,
-    students: 876,
-    image: "/api/placeholder/320/180",
-  },
-  {
-    title: "Construction Management",
-    instructor: "Omar Benjelloun",
-    level: "Advanced",
-    rating: 4.7,
-    students: 524,
-    image: "/api/placeholder/320/180",
-  },
-];
+
 
 export default function HomePage() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Top Navigation Bar */}
 
       {/* Hero Section */}
       <section className="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white py-16">
@@ -136,7 +52,7 @@ export default function HomePage() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((category, index) => (
+            {allcategories.map((category, index) => (
               <Link
                 key={index}
                 href={`/categories/${category.slug}`}
