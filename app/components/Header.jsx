@@ -2,62 +2,108 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Settings, User, Menu } from 'lucide-react';
+import { Bell, User, Menu } from 'lucide-react';
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
   return (
-    <header className="bg-white shadow-sm">
-      <div className="container mx-auto px-4 py-3 flex items-center justify-between">
-        <div className="flex items-center">
+    <header className="bg-black/95 backdrop-blur-sm border-b border-gray-800 sticky top-0 z-50">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center space-x-4">
+            <div className="text-2xl font-bold bg-gradient-to-r from-red-500 to-pink-500 bg-clip-text text-transparent">
+              LitDarija
+            </div>
+          </div>
+          
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-6">
+            <nav className="flex space-x-6">
+              <Link href="/" className="text-gray-300 hover:text-white transition-colors">
+                Home
+              </Link>
+              <Link href="/courses" className="text-gray-300 hover:text-white transition-colors">
+                Courses
+              </Link>
+              <Link href="/categories" className="text-gray-300 hover:text-white transition-colors">
+                Categories
+              </Link>
+              <Link href="/about" className="text-gray-300 hover:text-white transition-colors">
+                About
+              </Link>
+              <Link href="/contact" className="text-gray-300 hover:text-white transition-colors">
+                Contact
+              </Link>
+            </nav>
+            <button className="text-gray-300 hover:text-white transition-colors">
+              <Bell size={20} />
+            </button>
+            <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
+              <User size={18} />
+            </div>
+          </div>
+          
+          {/* Mobile Menu Button */}
           <button 
-            className="mr-4 h-6 w-6 text-gray-500 md:hidden"
+            className="md:hidden text-white"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle mobile menu"
           >
-            <Menu />
+            <Menu size={24} />
           </button>
-          <Link href="/" className="text-2xl font-bold text-emerald-600">
-            Lit<span className="text-gray-800">Darija</span>
-          </Link>
-        </div>
-        
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-6 text-gray-700">
-          <Link href="/" className="hover:text-emerald-600">Home</Link>
-          <Link href="/courses" className="hover:text-emerald-600">All Courses</Link>
-          <Link href="/about" className="hover:text-emerald-600">About Us</Link>
-          <Link href="/contact" className="hover:text-emerald-600">Contact</Link>
         </div>
         
         {/* Mobile Navigation */}
         {mobileMenuOpen && (
-          <div className="absolute top-16 left-0 right-0 bg-white shadow-md z-50 md:hidden">
-            <div className="flex flex-col p-4">
-              <Link href="/" className="py-2 hover:text-emerald-600">Home</Link>
-              <Link href="/courses" className="py-2 hover:text-emerald-600">All Courses</Link>
-              <Link href="/about" className="py-2 hover:text-emerald-600">About Us</Link>
-              <Link href="/contact" className="py-2 hover:text-emerald-600">Contact</Link>
+          <div className="md:hidden border-t border-gray-800 py-4">
+            <div className="flex flex-col space-y-4">
+              <Link 
+                href="/" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                href="/courses" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Courses
+              </Link>
+              <Link 
+                href="/categories" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Categories
+              </Link>
+              <Link 
+                href="/about" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                About
+              </Link>
+              <Link 
+                href="/contact" 
+                className="text-gray-300 hover:text-white transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Contact
+              </Link>
+              <div className="flex items-center space-x-4 pt-4 border-t border-gray-800">
+                <button className="text-gray-300 hover:text-white transition-colors">
+                  <Bell size={20} />
+                </button>
+                <div className="w-8 h-8 bg-gradient-to-r from-red-500 to-pink-500 rounded-full flex items-center justify-center">
+                  <User size={18} />
+                </div>
+              </div>
             </div>
           </div>
         )}
-        
-        <div className="flex items-center space-x-3">
-          <button 
-            className="p-2 rounded-full hover:bg-gray-100"
-            aria-label="Settings"
-          >
-            <Settings size={20} className="text-gray-600" />
-          </button>
-          <button 
-            className="flex items-center space-x-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md"
-            aria-label="Sign in"
-          >
-            <User size={18} />
-            <span>Sign In</span>
-          </button>
-        </div>
       </div>
     </header>
   );

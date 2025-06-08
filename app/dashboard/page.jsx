@@ -4,7 +4,7 @@ import {
   Bell, Eye, X, ChevronDown, User, BookOpen, Settings, BarChart2, 
   Grid, Search, Filter, Download, Plus, Edit3, Trash2, Star,
   Users, GraduationCap, FolderOpen, Zap, TrendingUp, Calendar,
-  Activity, AlertCircle, CheckCircle, Clock
+  Activity, AlertCircle, CheckCircle, Clock, Menu, ChevronLeft
 } from 'lucide-react';
 
 // Custom Hooks
@@ -20,7 +20,7 @@ const useNotifications = () => {
     },
     {
       id: 2,
-      title: 'User Report',
+      title: 'User Report', 
       message: 'A user has reported inappropriate content in "JavaScript Basics" course.',
       time: '1 day ago',
       read: false,
@@ -76,54 +76,6 @@ const StatCard = ({ icon: Icon, title, value, trend, color = 'emerald' }) => {
             <span className="ml-1">{trend.value}</span>
           </div>
         )}
-      </div>
-    </div>
-  );
-};
-
-const SearchAndFilter = ({ searchTerm, setSearchTerm, activeFilter, setActiveFilter, onExport }) => {
-  const filters = ['all', 'published', 'draft', 'pending'];
-  
-  return (
-    <div className="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
-      <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
-        <div className="flex flex-1 gap-3 w-full sm:w-auto">
-          <div className="relative flex-1 max-w-md">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
-            <input
-              type="text"
-              placeholder="Search courses..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-            />
-          </div>
-          
-          <div className="relative">
-            <select
-              value={activeFilter}
-              onChange={(e) => setActiveFilter(e.target.value)}
-              className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
-            >
-              {filters.map(filter => (
-                <option key={filter} value={filter}>
-                  {filter.charAt(0).toUpperCase() + filter.slice(1)}
-                </option>
-              ))}
-            </select>
-            <Filter className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
-          </div>
-        </div>
-        
-        <div className="flex gap-2">
-          <button
-            onClick={onExport}
-            className="flex items-center gap-2 px-4 py-2 border border-emerald-300 text-emerald-700 rounded-lg hover:bg-emerald-50 transition-colors"
-          >
-            <Download size={16} />
-            Export
-          </button>
-        </div>
       </div>
     </div>
   );
@@ -195,12 +147,20 @@ const NotificationPanel = ({ notifications, onClose, onMarkAsRead }) => {
   );
 };
 
-const AdminHeader = ({ title, onNotificationClick, notificationCount }) => (
+const AdminHeader = ({ title, onNotificationClick, notificationCount, onToggleSidebar, sidebarCollapsed }) => (
   <header className="bg-gradient-to-r from-emerald-600 to-emerald-800 text-white shadow-lg px-6 py-4">
     <div className="flex justify-between items-center">
-      <div>
-        <h1 className="text-2xl font-bold">{title}</h1>
-        <p className="text-emerald-100 mt-1">Manage your LitDarija platform</p>
+      <div className="flex items-center gap-4">
+        <button
+          onClick={onToggleSidebar}
+          className="p-2 text-emerald-100 hover:text-white hover:bg-emerald-700 rounded-lg transition-colors"
+        >
+          {sidebarCollapsed ? <Menu size={20} /> : <ChevronLeft size={20} />}
+        </button>
+        <div>
+          <h1 className="text-2xl font-bold">{title}</h1>
+          <p className="text-emerald-100 mt-1">Manage your LitDarija platform</p>
+        </div>
       </div>
       
       <div className="flex items-center space-x-4">
@@ -231,7 +191,7 @@ const AdminHeader = ({ title, onNotificationClick, notificationCount }) => (
   </header>
 );
 
-const Sidebar = ({ activeSection, setActiveSection }) => {
+const Sidebar = ({ activeSection, setActiveSection, collapsed, setCollapsed }) => {
   const menuItems = [
     { id: 'dashboard', label: 'Dashboard', icon: Grid },
     { id: 'courses', label: 'Courses', icon: BookOpen },
@@ -243,13 +203,19 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
   ];
 
   return (
-    <aside className="w-64 bg-white shadow-lg border-r border-gray-200 flex flex-col">
-      <div className="p-6 border-b border-gray-200 bg-gradient-to-r from-emerald-50 to-emerald-100">
+    <aside 
+      className={`${collapsed ? 'w-16' : 'w-64'} bg-white shadow-lg border-r border-gray-200 flex flex-col transition-all duration-300 ease-in-out`}
+      onMouseEnter={() => setCollapsed(false)}
+      onMouseLeave={() => setCollapsed(true)}
+    >
+      <div className={`p-6 border-b border-gray-200 bg-gradient-to-r from-emerald-50 to-emerald-100 ${collapsed ? 'px-3' : ''}`}>
         <div className="flex items-center space-x-2">
-          <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-lg flex items-center justify-center">
+          <div className="w-8 h-8 bg-gradient-to-br from-emerald-600 to-emerald-800 rounded-lg flex items-center justify-center flex-shrink-0">
             <Zap className="text-white" size={20} />
           </div>
-          <span className="text-xl font-bold text-emerald-800">LitDarija</span>
+          {!collapsed && (
+            <span className="text-xl font-bold text-emerald-800 whitespace-nowrap">LitDarija</span>
+          )}
         </div>
       </div>
       
@@ -263,14 +229,17 @@ const Sidebar = ({ activeSection, setActiveSection }) => {
               <li key={item.id}>
                 <button
                   onClick={() => setActiveSection(item.id)}
-                  className={`w-full flex items-center space-x-3 px-3 py-2.5 rounded-lg transition-all duration-200 ${
+                  className={`w-full flex items-center ${collapsed ? 'justify-center' : 'space-x-3'} px-3 py-2.5 rounded-lg transition-all duration-200 group ${
                     isActive 
                       ? 'bg-emerald-100 text-emerald-800 border border-emerald-200 shadow-sm' 
                       : 'text-gray-700 hover:bg-emerald-50 hover:text-emerald-700'
                   }`}
+                  title={collapsed ? item.label : ''}
                 >
-                  <Icon size={20} className={isActive ? 'text-emerald-600' : 'text-gray-500'} />
-                  <span className="font-medium">{item.label}</span>
+                  <Icon size={20} className={`${isActive ? 'text-emerald-600' : 'text-gray-500'} flex-shrink-0`} />
+                  {!collapsed && (
+                    <span className="font-medium">{item.label}</span>
+                  )}
                 </button>
               </li>
             );
@@ -313,13 +282,9 @@ const CoursesTable = ({ courses, onEdit, onPreview, onDelete }) => (
               <td className="px-6 py-4">
                 <div className="flex items-center">
                   <div className="h-12 w-12 flex-shrink-0 rounded-lg overflow-hidden bg-gradient-to-br from-emerald-100 to-emerald-200">
-                    {course.thumbnail ? (
-                      <img className="h-12 w-12 object-cover" src={course.thumbnail} alt="" />
-                    ) : (
-                      <div className="h-12 w-12 flex items-center justify-center">
-                        <BookOpen size={24} className="text-emerald-600" />
-                      </div>
-                    )}
+                    <div className="h-12 w-12 flex items-center justify-center">
+                      <BookOpen size={24} className="text-emerald-600" />
+                    </div>
                   </div>
                   <div className="ml-4">
                     <div className="text-sm font-semibold text-gray-900">{course.title}</div>
@@ -440,22 +405,17 @@ const DashboardOverview = () => {
             <Zap className="text-emerald-500" size={20} />
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <button className="p-4 border border-emerald-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-colors group">
-              <Plus className="text-emerald-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
-              <p className="text-sm font-medium text-gray-900">Add Course</p>
-            </button>
-            <button className="p-4 border border-emerald-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-colors group">
-              <Users className="text-emerald-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
-              <p className="text-sm font-medium text-gray-900">Manage Users</p>
-            </button>
-            <button className="p-4 border border-emerald-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-colors group">
-              <BarChart2 className="text-emerald-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
-              <p className="text-sm font-medium text-gray-900">View Analytics</p>
-            </button>
-            <button className="p-4 border border-emerald-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-colors group">
-              <Download className="text-emerald-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
-              <p className="text-sm font-medium text-gray-900">Export Data</p>
-            </button>
+            {[
+              { icon: Plus, label: 'Add Course' },
+              { icon: Users, label: 'Manage Users' },
+              { icon: BarChart2, label: 'View Analytics' },
+              { icon: Download, label: 'Export Data' }
+            ].map((action, index) => (
+              <button key={index} className="p-4 border border-emerald-200 rounded-lg hover:border-emerald-300 hover:bg-emerald-50 transition-colors group">
+                <action.icon className="text-emerald-600 mb-2 group-hover:scale-110 transition-transform" size={24} />
+                <p className="text-sm font-medium text-gray-900">{action.label}</p>
+              </button>
+            ))}
           </div>
         </div>
       </div>
@@ -467,6 +427,7 @@ const DashboardOverview = () => {
 export default function EnhancedAdminDashboard() {
   const [activeSection, setActiveSection] = useState('dashboard');
   const [showNotifications, setShowNotifications] = useState(false);
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(true);
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState('all');
   
@@ -481,8 +442,7 @@ export default function EnhancedAdminDashboard() {
       category: 'Web Development',
       status: 'published',
       students: 1245,
-      rating: 4.8,
-      thumbnail: null
+      rating: 4.8
     },
     {
       id: 2,
@@ -491,8 +451,7 @@ export default function EnhancedAdminDashboard() {
       category: 'Frontend',
       status: 'draft',
       students: 0,
-      rating: 0,
-      thumbnail: null
+      rating: 0
     },
     {
       id: 3,
@@ -501,8 +460,7 @@ export default function EnhancedAdminDashboard() {
       category: 'Backend',
       status: 'published',
       students: 892,
-      rating: 4.6,
-      thumbnail: null
+      rating: 4.6
     }
   ];
 
@@ -514,26 +472,6 @@ export default function EnhancedAdminDashboard() {
       return matchesSearch && matchesFilter;
     });
   }, [searchTerm, activeFilter]);
-
-  const handleExport = useCallback(() => {
-    console.log('Exporting data...');
-    // Implement export functionality
-  }, []);
-
-  const handleEdit = useCallback((course) => {
-    console.log('Editing course:', course);
-    // Implement edit functionality
-  }, []);
-
-  const handlePreview = useCallback((course) => {
-    console.log('Previewing course:', course);
-    // Implement preview functionality
-  }, []);
-
-  const handleDelete = useCallback((course) => {
-    console.log('Deleting course:', course);
-    // Implement delete functionality
-  }, []);
 
   const getSectionTitle = (section) => {
     const titles = {
@@ -549,14 +487,21 @@ export default function EnhancedAdminDashboard() {
   };
 
   return (
-    <div className="flex h-screen bg-gray-50 ">
-      <Sidebar activeSection={activeSection} setActiveSection={setActiveSection} />
+    <div className="flex h-screen bg-gray-50">
+      <Sidebar 
+        activeSection={activeSection} 
+        setActiveSection={setActiveSection}
+        collapsed={sidebarCollapsed}
+        setCollapsed={setSidebarCollapsed}
+      />
       
       <div className="flex-1 flex flex-col overflow-hidden">
         <AdminHeader
           title={getSectionTitle(activeSection)}
           onNotificationClick={() => setShowNotifications(!showNotifications)}
           notificationCount={unreadCount}
+          onToggleSidebar={() => setSidebarCollapsed(!sidebarCollapsed)}
+          sidebarCollapsed={sidebarCollapsed}
         />
         
         {showNotifications && (
@@ -583,19 +528,48 @@ export default function EnhancedAdminDashboard() {
                 </button>
               </div>
               
-              <SearchAndFilter
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                activeFilter={activeFilter}
-                setActiveFilter={setActiveFilter}
-                onExport={handleExport}
-              />
+              <div className="bg-white rounded-lg shadow-sm p-4 mb-6 border border-gray-100">
+                <div className="flex flex-col sm:flex-row gap-4 items-center justify-between">
+                  <div className="flex flex-1 gap-3 w-full sm:w-auto">
+                    <div className="relative flex-1 max-w-md">
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={20} />
+                      <input
+                        type="text"
+                        placeholder="Search courses..."
+                        value={searchTerm}
+                        onChange={(e) => setSearchTerm(e.target.value)}
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                      />
+                    </div>
+                    
+                    <div className="relative">
+                      <select
+                        value={activeFilter}
+                        onChange={(e) => setActiveFilter(e.target.value)}
+                        className="appearance-none bg-white border border-gray-300 rounded-lg px-4 py-2 pr-8 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 transition-colors"
+                      >
+                        {['all', 'published', 'draft', 'pending'].map(filter => (
+                          <option key={filter} value={filter}>
+                            {filter.charAt(0).toUpperCase() + filter.slice(1)}
+                          </option>
+                        ))}
+                      </select>
+                      <Filter className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400" size={16} />
+                    </div>
+                  </div>
+                  
+                  <button className="flex items-center gap-2 px-4 py-2 border border-emerald-300 text-emerald-700 rounded-lg hover:bg-emerald-50 transition-colors">
+                    <Download size={16} />
+                    Export
+                  </button>
+                </div>
+              </div>
               
               <CoursesTable
                 courses={filteredCourses}
-                onEdit={handleEdit}
-                onPreview={handlePreview}
-                onDelete={handleDelete}
+                onEdit={(course) => console.log('Editing:', course)}
+                onPreview={(course) => console.log('Previewing:', course)}
+                onDelete={(course) => console.log('Deleting:', course)}
               />
             </div>
           )}

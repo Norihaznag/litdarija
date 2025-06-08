@@ -6,6 +6,290 @@ export const categories = ["Finance", "Web Development", "Construction", "Design
 export const levels = ["Beginner", "Intermediate", "Advanced"];
 export const priceRanges = ["All Prices", "Under 200 MAD", "200-250 MAD", "Over 250 MAD"];
 
+export const coursedata = {
+  id: 3,
+  title: "Full Stack Web Development",
+  description: "Comprehensive course covering frontend and backend web development. Learn to build complete web applications from scratch using modern technologies and best practices. Perfect for those looking to become professional web developers or enhance their existing skills.",
+  longDescription: "This comprehensive course will take you from the basics of web development to building complex, full-stack applications. You'll learn both front-end and back-end technologies, working with HTML, CSS, JavaScript, React for the frontend, and Node.js, Express, and MongoDB for the backend. By the end of this course, you'll be able to build complete web applications independently and have a portfolio of projects to showcase your skills.",
+  instructor: {
+    name: "Yasmine Benkiran",
+    bio: "Full Stack Developer with 10+ years of experience. Yasmine has worked with major tech companies and has taught over 10,000 students online. She specializes in React, Node.js, and modern JavaScript development.",
+    image: "https://images.unsplash.com/photo-1494790108755-2616b612b1f5?w=150&h=150&fit=crop&crop=face"
+  },
+  category: "Web Development",
+  level: "Intermediate",
+  language: "Darija",
+  rating: 4.9,
+  students: 876,
+  reviews: 124,
+  lastUpdated: "March 2025",
+  duration: "12 weeks",
+  lessonsCount: 48,
+  hoursCount: 72,
+  price: 299,
+  discountPrice: 249,
+  image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=800&h=450&fit=crop",
+  whatYouWillLearn: [
+    "Build complete web applications from scratch",
+    "Master HTML, CSS, and JavaScript fundamentals",
+    "Create responsive user interfaces with React",
+    "Develop backend APIs with Node.js and Express",
+    "Work with databases like MongoDB",
+    "Deploy your applications to production environments",
+    "Implement user authentication and authorization",
+    "Connect frontend and backend with REST APIs"
+  ],
+  requirements: [
+    "Basic computer skills",
+    "Understanding of how websites work",
+    "No prior programming experience required, but helpful"
+  ],
+  curriculum: [
+    {
+      title: "Introduction to Web Development",
+      lessons: [
+        { title: "Course Overview", duration: "15 min", type: "video", isPreview: true },
+        { title: "Setting Up Your Development Environment", duration: "25 min", type: "video", isPreview: true },
+        { title: "Understanding Web Technologies", duration: "40 min", type: "video" },
+        { title: "Your First Web Page", duration: "60 min", type: "practice" }
+      ]
+    },
+    {
+      title: "HTML & CSS Fundamentals",
+      lessons: [
+        { title: "HTML Structure and Tags", duration: "45 min", type: "video" },
+        { title: "CSS Styling Basics", duration: "50 min", type: "video" },
+        { title: "Responsive Design Principles", duration: "55 min", type: "video" },
+        { title: "Building a Responsive Landing Page", duration: "120 min", type: "practice" },
+        { title: "HTML & CSS Assessment", duration: "30 min", type: "quiz" }
+      ]
+    },
+    {
+      title: "JavaScript Essentials",
+      lessons: [
+        { title: "JavaScript Syntax and Variables", duration: "40 min", type: "video" },
+        { title: "Functions and Control Flow", duration: "55 min", type: "video" },
+        { title: "DOM Manipulation", duration: "60 min", type: "video" },
+        { title: "Building Interactive Web Pages", duration: "90 min", type: "practice" },
+        { title: "JavaScript Basics Assessment", duration: "30 min", type: "quiz" }
+      ]
+    },
+    {
+      title: "Frontend Development with React",
+      lessons: [
+        { title: "Introduction to React", duration: "40 min", type: "video" },
+        { title: "Components and Props", duration: "50 min", type: "video" },
+        { title: "State and Lifecycle", duration: "60 min", type: "video" },
+        { title: "Building a React Application", duration: "180 min", type: "practice" }
+      ]
+    },
+    {
+      title: "Backend Development with Node.js",
+      lessons: [
+        { title: "Introduction to Node.js", duration: "45 min", type: "video" },
+        { title: "Express.js Framework", duration: "50 min", type: "video" },
+        { title: "RESTful API Design", duration: "60 min", type: "video" },
+        { title: "Building a Backend API", duration: "150 min", type: "practice" }
+      ]
+    }
+  ],
+  reviews: [
+    {
+      name: "Ahmed Tazi",
+      rating: 5,
+      date: "April 12, 2025",
+      comment: "This course completely changed my career. I went from knowing almost nothing about web development to building my own full-stack applications. The explanations are clear and the projects are challenging but achievable.",
+      image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=60&h=60&fit=crop&crop=face"
+    },
+    {
+      name: "Fatima Ouazzani",
+      rating: 5,
+      date: "March 28, 2025",
+      comment: "I love how the course is taught in Darija, which makes technical concepts much easier to understand. The instructor is very knowledgeable and explains everything in detail. Highly recommended!",
+      image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=60&h=60&fit=crop&crop=face"
+    },
+    {
+      name: "Karim El Fassi",
+      rating: 4,
+      date: "March 15, 2025",
+      comment: "Great content and very well-structured. I would have liked a bit more focus on advanced React concepts, but overall it's an excellent course for beginners and intermediate developers.",
+      image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=60&h=60&fit=crop&crop=face"
+    }
+  ]
+};
+export const courseData = {
+  id: 3,
+  title: "Full Stack Web Development",
+  description: "Comprehensive course covering frontend and backend web development.",
+  instructor: {
+    name: "Yasmine Benkiran",
+    image: "/api/placeholder/150/150"
+  },
+  category: "Web Development",
+  level: "Intermediate",
+  language: "Darija",
+  progress: 15, // Percentage complete
+  curriculum: [
+    {
+      title: "Introduction to Web Development",
+      lessons: [
+        { 
+          id: "1-1",
+          title: "Course Overview", 
+          duration: "15 min", 
+          type: "video",
+          completed: true,
+          videoUrl: "#", // Would be a real URL in production
+          description: "In this lesson, we'll go through what you'll learn in this course and how to get the most out of it.",
+          resources: [
+            { title: "Course Syllabus", type: "pdf", url: "#" },
+            { title: "Development Environment Setup Guide", type: "doc", url: "#" }
+          ]
+        },
+        { 
+          id: "1-2",
+          title: "Setting Up Your Development Environment", 
+          duration: "25 min", 
+          type: "video",
+          completed: true,
+          videoUrl: "#",
+          description: "Learn how to set up your development environment with VS Code, Git, and Node.js."
+        },
+        { 
+          id: "1-3",
+          title: "Understanding Web Technologies", 
+          duration: "40 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "An overview of key web technologies: HTML, CSS, JavaScript, and how they work together."
+        },
+        { 
+          id: "1-4",
+          title: "Your First Web Page", 
+          duration: "60 min", 
+          type: "practice",
+          completed: false,
+          description: "Build your first web page using HTML and CSS, applying what you've learned so far.",
+          instructions: "Create a simple personal profile page with your name, a short bio, and a few links. Use basic HTML elements and CSS styling.",
+          codeTemplate: "<!DOCTYPE html>\n<html>\n<head>\n  <title>My Profile</title>\n  <style>\n    /* Add your CSS here */\n  </style>\n</head>\n<body>\n  <!-- Add your HTML here -->\n</body>\n</html>",
+          submission: {
+            type: "code",
+            status: "not_started" // could be "not_started", "in_progress", "submitted", "graded"
+          }
+        }
+      ]
+    },
+    {
+      title: "HTML & CSS Fundamentals",
+      lessons: [
+        { 
+          id: "2-1",
+          title: "HTML Structure and Tags", 
+          duration: "45 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "Deep dive into HTML structure, semantic markup, and common tags."
+        },
+        { 
+          id: "2-2",
+          title: "CSS Styling Basics", 
+          duration: "50 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "Learn CSS fundamentals including selectors, properties, and the box model."
+        },
+        { 
+          id: "2-3",
+          title: "Responsive Design Principles", 
+          duration: "55 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "Master responsive design techniques including media queries and flexible layouts."
+        },
+        { 
+          id: "2-4",
+          title: "Building a Responsive Landing Page", 
+          duration: "120 min", 
+          type: "practice",
+          completed: false,
+          description: "Apply responsive design principles to build a landing page that works on all devices.",
+          instructions: "Create a landing page for a fictional product or service using HTML and CSS. Ensure it's responsive across mobile, tablet, and desktop views.",
+          submission: {
+            type: "code",
+            status: "not_started"
+          }
+        },
+        { 
+          id: "2-5",
+          title: "HTML & CSS Assessment", 
+          duration: "30 min", 
+          type: "quiz",
+          completed: false,
+          description: "Test your knowledge of HTML and CSS fundamentals.",
+          questions: [
+            {
+              question: "Which HTML element is used to define the main content area of a document?",
+              options: ["<body>", "<main>", "<content>", "<section>"],
+              answer: 1
+            },
+            // More questions would be here
+          ]
+        }
+      ]
+    },
+    {
+      title: "JavaScript Essentials",
+      lessons: [
+        { 
+          id: "3-1",
+          title: "JavaScript Syntax and Variables", 
+          duration: "40 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "Introduction to JavaScript syntax, data types, and variable declarations."
+        },
+        // More lessons for this section
+      ]
+    },
+    {
+      title: "Frontend Development with React",
+      lessons: [
+        { 
+          id: "4-1",
+          title: "Introduction to React", 
+          duration: "40 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "Learn the fundamentals of React and why it's a popular framework."
+        },
+        // More lessons for this section
+      ]
+    },
+    {
+      title: "Backend Development with Node.js",
+      lessons: [
+        { 
+          id: "5-1",
+          title: "Introduction to Node.js", 
+          duration: "45 min", 
+          type: "video",
+          completed: false,
+          videoUrl: "#",
+          description: "Get started with Node.js and understand server-side JavaScript."
+        },
+        // More lessons for this section
+      ]
+    }
+  ]
+};
+
+
 export const featuredCourses = [
   {
     title: "Financial Literacy basics",

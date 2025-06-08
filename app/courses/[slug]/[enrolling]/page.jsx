@@ -4,654 +4,476 @@ import {
   ChevronLeft, 
   ChevronRight, 
   PlayCircle, 
-  Book, 
-  Award, 
-  CheckCircle, 
-  Download, 
-  BookOpen, 
-  MessageCircle, 
-  Settings, 
-  User,
+  Play,
+  Pause,
+  SkipForward,
+  SkipBack,
+  Volume2,
+  Settings,
+  Maximize,
+  CheckCircle2,
+  Clock,
+  Zap,
   Menu,
   X,
-  List,
+  ThumbsUp,
+  Share,
+  Download,
+  BookOpen,
   FileText,
-  HelpCircle,
-  CheckSquare,
-  Clock
+  Star,
+  Coffee,
+  Target,
+  Award,
+  TrendingUp
 } from 'lucide-react';
 
-// Sample data for the course - In a real app, this would come from an API
-// Using the same courseData structure from your paste, with additional fields for content
+// Mock course data
 const courseData = {
-  id: 3,
-  title: "Full Stack Web Development",
-  description: "Comprehensive course covering frontend and backend web development.",
+  title: "Complete React Mastery Course",
   instructor: {
-    name: "Yasmine Benkiran",
-    image: "/api/placeholder/150/150"
+    name: "Sarah Chen",
+    image: "/api/placeholder/40/40"
   },
-  category: "Web Development",
-  level: "Intermediate",
-  language: "Darija",
-  progress: 15, // Percentage complete
   curriculum: [
     {
-      title: "Introduction to Web Development",
+      title: "Getting Started",
       lessons: [
-        { 
-          id: "1-1",
-          title: "Course Overview", 
-          duration: "15 min", 
+        {
+          id: 1,
+          title: "What is React?",
+          duration: "5:30",
           type: "video",
           completed: true,
-          videoUrl: "#", // Would be a real URL in production
-          description: "In this lesson, we'll go through what you'll learn in this course and how to get the most out of it.",
-          resources: [
-            { title: "Course Syllabus", type: "pdf", url: "#" },
-            { title: "Development Environment Setup Guide", type: "doc", url: "#" }
-          ]
+          description: "Learn the basics of React and why it's so popular",
+          difficulty: "Beginner",
+          keyPoints: ["Components", "Virtual DOM", "JSX"]
         },
-        { 
-          id: "1-2",
-          title: "Setting Up Your Development Environment", 
-          duration: "25 min", 
-          type: "video",
-          completed: true,
-          videoUrl: "#",
-          description: "Learn how to set up your development environment with VS Code, Git, and Node.js."
-        },
-        { 
-          id: "1-3",
-          title: "Understanding Web Technologies", 
-          duration: "40 min", 
+        {
+          id: 2,
+          title: "Setting up your environment",
+          duration: "8:45",
           type: "video",
           completed: false,
-          videoUrl: "#",
-          description: "An overview of key web technologies: HTML, CSS, JavaScript, and how they work together."
-        },
-        { 
-          id: "1-4",
-          title: "Your First Web Page", 
-          duration: "60 min", 
-          type: "practice",
-          completed: false,
-          description: "Build your first web page using HTML and CSS, applying what you've learned so far.",
-          instructions: "Create a simple personal profile page with your name, a short bio, and a few links. Use basic HTML elements and CSS styling.",
-          codeTemplate: "<!DOCTYPE html>\n<html>\n<head>\n  <title>My Profile</title>\n  <style>\n    /* Add your CSS here */\n  </style>\n</head>\n<body>\n  <!-- Add your HTML here -->\n</body>\n</html>",
-          submission: {
-            type: "code",
-            status: "not_started" // could be "not_started", "in_progress", "submitted", "graded"
-          }
+          description: "Get your development environment ready",
+          difficulty: "Beginner",
+          keyPoints: ["Node.js", "Create React App", "VS Code"]
         }
       ]
     },
     {
-      title: "HTML & CSS Fundamentals",
+      title: "Core Concepts",
       lessons: [
-        { 
-          id: "2-1",
-          title: "HTML Structure and Tags", 
-          duration: "45 min", 
+        {
+          id: 3,
+          title: "Components & Props",
+          duration: "12:20",
           type: "video",
           completed: false,
-          videoUrl: "#",
-          description: "Deep dive into HTML structure, semantic markup, and common tags."
+          description: "Master the building blocks of React",
+          difficulty: "Intermediate",
+          keyPoints: ["Functional Components", "Props", "Reusability"]
         },
-        { 
-          id: "2-2",
-          title: "CSS Styling Basics", 
-          duration: "50 min", 
+        {
+          id: 4,
+          title: "State & Events",
+          duration: "15:30",
           type: "video",
           completed: false,
-          videoUrl: "#",
-          description: "Learn CSS fundamentals including selectors, properties, and the box model."
-        },
-        { 
-          id: "2-3",
-          title: "Responsive Design Principles", 
-          duration: "55 min", 
-          type: "video",
-          completed: false,
-          videoUrl: "#",
-          description: "Master responsive design techniques including media queries and flexible layouts."
-        },
-        { 
-          id: "2-4",
-          title: "Building a Responsive Landing Page", 
-          duration: "120 min", 
-          type: "practice",
-          completed: false,
-          description: "Apply responsive design principles to build a landing page that works on all devices.",
-          instructions: "Create a landing page for a fictional product or service using HTML and CSS. Ensure it's responsive across mobile, tablet, and desktop views.",
-          submission: {
-            type: "code",
-            status: "not_started"
-          }
-        },
-        { 
-          id: "2-5",
-          title: "HTML & CSS Assessment", 
-          duration: "30 min", 
-          type: "quiz",
-          completed: false,
-          description: "Test your knowledge of HTML and CSS fundamentals.",
-          questions: [
-            {
-              question: "Which HTML element is used to define the main content area of a document?",
-              options: ["<body>", "<main>", "<content>", "<section>"],
-              answer: 1
-            },
-            // More questions would be here
-          ]
+          description: "Handle user interactions and dynamic data",
+          difficulty: "Intermediate",
+          keyPoints: ["useState", "Event Handlers", "State Updates"]
         }
-      ]
-    },
-    {
-      title: "JavaScript Essentials",
-      lessons: [
-        { 
-          id: "3-1",
-          title: "JavaScript Syntax and Variables", 
-          duration: "40 min", 
-          type: "video",
-          completed: false,
-          videoUrl: "#",
-          description: "Introduction to JavaScript syntax, data types, and variable declarations."
-        },
-        // More lessons for this section
-      ]
-    },
-    {
-      title: "Frontend Development with React",
-      lessons: [
-        { 
-          id: "4-1",
-          title: "Introduction to React", 
-          duration: "40 min", 
-          type: "video",
-          completed: false,
-          videoUrl: "#",
-          description: "Learn the fundamentals of React and why it's a popular framework."
-        },
-        // More lessons for this section
-      ]
-    },
-    {
-      title: "Backend Development with Node.js",
-      lessons: [
-        { 
-          id: "5-1",
-          title: "Introduction to Node.js", 
-          duration: "45 min", 
-          type: "video",
-          completed: false,
-          videoUrl: "#",
-          description: "Get started with Node.js and understand server-side JavaScript."
-        },
-        // More lessons for this section
       ]
     }
   ]
 };
 
-export default function CourseLearningPage() {
-  // State variables
+export default function EnhancedCourseLearningPage() {
   const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
-  const [showSidebar, setShowSidebar] = useState(true);
-  const [sidebarMobileOpen, setSidebarMobileOpen] = useState(false);
-  const [noteContent, setNoteContent] = useState('');
-  const [notes, setNotes] = useState([]);
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [showPlaylist, setShowPlaylist] = useState(false);
+  const [playbackSpeed, setPlaybackSpeed] = useState(1);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [showNotes, setShowNotes] = useState(false);
-  
-  // Get current lesson
+  const [quickNotes, setQuickNotes] = useState([]);
+  const [currentNote, setCurrentNote] = useState('');
+
   const currentSection = courseData.curriculum[currentSectionIndex];
   const currentLesson = currentSection?.lessons[currentLessonIndex];
   
-  // Calculate total lessons completed
   const totalLessons = courseData.curriculum.reduce((acc, section) => acc + section.lessons.length, 0);
   const completedLessons = courseData.curriculum.reduce((acc, section) => {
     return acc + section.lessons.filter(lesson => lesson.completed).length;
   }, 0);
-  
-  // Navigate to a specific lesson
+
   const navigateToLesson = (sectionIndex, lessonIndex) => {
     setCurrentSectionIndex(sectionIndex);
     setCurrentLessonIndex(lessonIndex);
-    setSidebarMobileOpen(false); // Close mobile sidebar after navigation
+    setShowPlaylist(false);
+    setProgress(0);
   };
-  
-  // Mark lesson as complete
-  const markAsComplete = () => {
-    // In a real application, this would make an API call
-    // For now, we'll just update the state
-    const updatedCourseData = { ...courseData };
-    updatedCourseData.curriculum[currentSectionIndex].lessons[currentLessonIndex].completed = true;
-    // We would update the API here
-    
-    // Navigate to next lesson if available
-    goToNextLesson();
-  };
-  
-  // Go to next lesson
+
   const goToNextLesson = () => {
-    // Check if there's another lesson in the current section
     if (currentLessonIndex < currentSection.lessons.length - 1) {
       setCurrentLessonIndex(currentLessonIndex + 1);
-    } 
-    // Check if there's another section
-    else if (currentSectionIndex < courseData.curriculum.length - 1) {
+    } else if (currentSectionIndex < courseData.curriculum.length - 1) {
       setCurrentSectionIndex(currentSectionIndex + 1);
       setCurrentLessonIndex(0);
     }
+    setProgress(0);
   };
-  
-  // Go to previous lesson
+
   const goToPrevLesson = () => {
-    // Check if there's a previous lesson in the current section
     if (currentLessonIndex > 0) {
       setCurrentLessonIndex(currentLessonIndex - 1);
-    } 
-    // Check if there's a previous section
-    else if (currentSectionIndex > 0) {
+    } else if (currentSectionIndex > 0) {
       setCurrentSectionIndex(currentSectionIndex - 1);
       setCurrentLessonIndex(courseData.curriculum[currentSectionIndex - 1].lessons.length - 1);
     }
+    setProgress(0);
   };
-  
-  // Save note
-  const saveNote = () => {
-    if (noteContent.trim()) {
-      const newNote = {
+
+  const markComplete = () => {
+    currentLesson.completed = true;
+    goToNextLesson();
+  };
+
+  const addQuickNote = () => {
+    if (currentNote.trim()) {
+      setQuickNotes([...quickNotes, {
         id: Date.now(),
-        content: noteContent,
-        timestamp: new Date(),
+        content: currentNote,
+        timestamp: `${Math.floor(progress/60)}:${(progress%60).toString().padStart(2, '0')}`,
         lessonId: currentLesson.id
-      };
-      setNotes([...notes, newNote]);
-      setNoteContent('');
+      }]);
+      setCurrentNote('');
     }
   };
-  
-  // Filter notes for current lesson
-  const currentLessonNotes = notes.filter(note => note.lessonId === currentLesson?.id);
-  
-  // Format time from timestamp
-  const formatTime = (timestamp) => {
-    return new Date(timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
+
+  // Auto-progress simulation
+  useEffect(() => {
+    let interval;
+    if (isPlaying) {
+      interval = setInterval(() => {
+        setProgress(prev => {
+          const newProgress = prev + 1;
+          const totalSeconds = parseInt(currentLesson?.duration.split(':')[0]) * 60 + parseInt(currentLesson?.duration.split(':')[1]);
+          return newProgress >= totalSeconds ? totalSeconds : newProgress;
+        });
+      }, 1000 / playbackSpeed);
+    }
+    return () => clearInterval(interval);
+  }, [isPlaying, playbackSpeed, currentLesson]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
+
+  const getDifficultyColor = (difficulty) => {
+    switch (difficulty) {
+      case 'Beginner': return 'bg-green-100 text-green-800';
+      case 'Intermediate': return 'bg-yellow-100 text-yellow-800';
+      case 'Advanced': return 'bg-red-100 text-red-800';
+      default: return 'bg-gray-100 text-gray-800';
+    }
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200 sticky top-0 z-30">
-        <div className="container mx-auto px-4">
-          <div className="flex items-center justify-between h-16">
-            {/* Course Title / Nav Toggle */}
-            <div className="flex items-center">
-              <button 
-                className="md:hidden mr-3 text-gray-500"
-                onClick={() => setSidebarMobileOpen(!sidebarMobileOpen)}
-              >
-                {sidebarMobileOpen ? <X size={20} /> : <Menu size={20} />}
-              </button>
-              <h1 className="font-bold text-gray-800 text-lg md:text-xl truncate">
-                {courseData.title}
-              </h1>
+    <div className="min-h-screen bg-black text-white">
+      {/* YouTube-style Header */}
+      <header className="bg-black border-b border-gray-800 sticky top-0 z-50">
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center space-x-4">
+            <button 
+              onClick={() => setShowPlaylist(!showPlaylist)}
+              className="text-white hover:text-red-400 transition-colors"
+            >
+              <Menu size={24} />
+            </button>
+            <div className="text-white font-semibold truncate max-w-xs md:max-w-md">
+              {currentLesson?.title}
             </div>
-            
-            {/* Controls */}
-            <div className="flex items-center space-x-2 md:space-x-4">
-              <button 
-                className="hidden md:flex items-center text-gray-600 hover:text-emerald-600"
-                onClick={() => setShowSidebar(!showSidebar)}
-              >
-                {showSidebar ? <ChevronLeft size={20} /> : <ChevronRight size={20} />}
-                <span className="ml-1">{showSidebar ? 'Hide' : 'Show'} Menu</span>
-              </button>
-              
-              <button 
-                className="text-gray-600 hover:text-emerald-600"
-                onClick={() => setShowNotes(!showNotes)}
-              >
-                <FileText size={20} />
-                <span className="sr-only">Notes</span>
-              </button>
-              
-              <button className="text-gray-600 hover:text-emerald-600">
-                <HelpCircle size={20} />
-                <span className="sr-only">Help</span>
-              </button>
-              
-              <div className="ml-4">
-                <img 
-                  src="/api/placeholder/32/32" 
-                  alt="User avatar" 
-                  className="w-8 h-8 rounded-full"
-                />
-              </div>
+          </div>
+          
+          <div className="flex items-center space-x-3">
+            <div className="hidden md:flex items-center space-x-2 text-sm text-gray-300">
+              <TrendingUp size={16} />
+              <span>{completedLessons}/{totalLessons} completed</span>
             </div>
+            <button 
+              onClick={() => setShowNotes(!showNotes)}
+              className="text-white hover:text-red-400 transition-colors"
+            >
+              <FileText size={20} />
+            </button>
           </div>
         </div>
       </header>
-      
-      <div className="flex flex-1 overflow-hidden">
-        {/* Sidebar - Course Structure */}
-        <aside 
-          className={`bg-white border-r border-gray-200 flex-shrink-0 w-full md:w-72 lg:w-80 overflow-y-auto transition-all duration-300 ease-in-out 
-            ${showSidebar ? 'md:block' : 'md:hidden'} 
-            ${sidebarMobileOpen ? 'fixed inset-0 z-40 md:relative' : 'hidden md:block'}`}
-        >
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center justify-between">
+
+      <div className="flex">
+        {/* Main Video Area */}
+        <div className={`flex-1 ${showPlaylist ? 'md:pr-96' : ''}`}>
+          {/* Video Player */}
+          <div className="relative bg-black">
+            <div className="aspect-video bg-gradient-to-br from-gray-900 to-black flex items-center justify-center relative group">
+              {/* Video Placeholder */}
+              <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 to-purple-900/20"></div>
+              
+              {/* Play Button */}
+              <button 
+                onClick={() => setIsPlaying(!isPlaying)}
+                className="relative z-10 bg-red-600 hover:bg-red-700 rounded-full p-4 transition-all transform hover:scale-110"
+              >
+                {isPlaying ? <Pause size={32} /> : <Play size={32} />}
+              </button>
+
+              {/* Video Controls */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                {/* Progress Bar */}
+                <div className="w-full bg-gray-600 h-1 rounded-full mb-4">
+                  <div 
+                    className="bg-red-600 h-1 rounded-full transition-all"
+                    style={{ width: `${(progress / (parseInt(currentLesson?.duration.split(':')[0]) * 60 + parseInt(currentLesson?.duration.split(':')[1]))) * 100}%` }}
+                  ></div>
+                </div>
+
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-4">
+                    <button onClick={() => setIsPlaying(!isPlaying)}>
+                      {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                    </button>
+                    <button onClick={goToPrevLesson}>
+                      <SkipBack size={20} />
+                    </button>
+                    <button onClick={goToNextLesson}>
+                      <SkipForward size={20} />
+                    </button>
+                    <Volume2 size={20} />
+                    <span className="text-sm">
+                      {formatTime(progress)} / {currentLesson?.duration}
+                    </span>
+                  </div>
+
+                  <div className="flex items-center space-x-4">
+                    <div className="relative group">
+                      <button className="flex items-center space-x-1 text-sm hover:text-red-400">
+                        <span>{playbackSpeed}x</span>
+                      </button>
+                      <div className="absolute bottom-full right-0 mb-2 bg-gray-800 rounded-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                        {speedOptions.map(speed => (
+                          <button
+                            key={speed}
+                            onClick={() => setPlaybackSpeed(speed)}
+                            className={`block w-full text-left px-3 py-1 rounded text-sm hover:bg-gray-700 ${
+                              playbackSpeed === speed ? 'text-red-400' : ''
+                            }`}
+                          >
+                            {speed}x
+                          </button>
+                        ))}
+                      </div>
+                    </div>
+                    <button onClick={() => setIsFullscreen(!isFullscreen)}>
+                      <Maximize size={20} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Video Info */}
+          <div className="p-6 bg-gray-900">
+            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
+              <div className="flex-1">
+                <h1 className="text-xl md:text-2xl font-bold mb-2">{currentLesson?.title}</h1>
+                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400 mb-4">
+                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(currentLesson?.difficulty)}`}>
+                    {currentLesson?.difficulty}
+                  </span>
+                  <div className="flex items-center">
+                    <Clock size={16} className="mr-1" />
+                    {currentLesson?.duration}
+                  </div>
+                  <div className="flex items-center">
+                    <Target size={16} className="mr-1" />
+                    Section {currentSectionIndex + 1}, Lesson {currentLessonIndex + 1}
+                  </div>
+                </div>
+                <p className="text-gray-300 mb-4">{currentLesson?.description}</p>
+                
+                {/* Key Points */}
+                {currentLesson?.keyPoints && (
+                  <div className="mb-4">
+                    <h3 className="font-semibold mb-2 flex items-center">
+                      <Zap size={16} className="mr-2 text-yellow-400" />
+                      Quick Takeaways
+                    </h3>
+                    <div className="flex flex-wrap gap-2">
+                      {currentLesson.keyPoints.map((point, idx) => (
+                        <span key={idx} className="bg-gray-800 px-3 py-1 rounded-full text-sm">
+                          {point}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-3 mb-6">
+              <button 
+                onClick={markComplete}
+                className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-full font-medium transition-colors flex items-center"
+              >
+                <CheckCircle2 size={18} className="mr-2" />
+                Mark Complete
+              </button>
+              <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition-colors flex items-center">
+                <ThumbsUp size={18} className="mr-2" />
+                Like
+              </button>
+              <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition-colors flex items-center">
+                <Share size={18} className="mr-2" />
+                Share
+              </button>
+              <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition-colors flex items-center">
+                <Download size={18} className="mr-2" />
+                Resources
+              </button>
+            </div>
+
+            {/* Instructor Info */}
+            <div className="border-t border-gray-700 pt-4">
               <div className="flex items-center">
                 <img 
                   src={courseData.instructor.image} 
-                  alt={courseData.instructor.name} 
-                  className="w-10 h-10 rounded-full mr-3"
+                  alt={courseData.instructor.name}
+                  className="w-12 h-12 rounded-full mr-4"
                 />
                 <div>
-                  <p className="text-sm text-gray-500">Instructor</p>
-                  <p className="font-medium text-gray-800">{courseData.instructor.name}</p>
+                  <p className="font-semibold">{courseData.instructor.name}</p>
+                  <p className="text-sm text-gray-400">Instructor</p>
                 </div>
               </div>
             </div>
           </div>
-          
-          <div className="p-4 border-b border-gray-200">
-            <div className="flex items-center justify-between mb-2">
-              <h2 className="font-medium text-gray-800">Your Progress</h2>
-              <span className="text-sm font-medium">{completedLessons}/{totalLessons} lessons</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
-              <div 
-                className="bg-emerald-600 h-2.5 rounded-full" 
-                style={{ width: `${(completedLessons / totalLessons) * 100}%` }}
-              ></div>
-            </div>
-          </div>
-          
-          <div className="p-4">
-            <h2 className="font-medium text-gray-800 mb-4">Course Content</h2>
-            
-            <div className="space-y-3">
-              {courseData.curriculum.map((section, sectionIdx) => (
-                <div key={sectionIdx} className="border border-gray-200 rounded-lg overflow-hidden">
-                  <div className="bg-gray-50 p-3 font-medium text-gray-800">
-                    Section {sectionIdx + 1}: {section.title}
-                  </div>
-                  <div className="divide-y divide-gray-200">
-                    {section.lessons.map((lesson, lessonIdx) => (
-                      <div 
-                        key={lessonIdx}
-                        onClick={() => navigateToLesson(sectionIdx, lessonIdx)}
-                        className={`p-3 flex items-start hover:bg-gray-50 cursor-pointer ${
-                          currentSectionIndex === sectionIdx && currentLessonIndex === lessonIdx
-                            ? 'bg-emerald-50 border-l-4 border-emerald-500'
-                            : ''
-                        }`}
-                      >
-                        <div className="mr-3 mt-0.5">
-                          {lesson.completed ? (
-                            <CheckCircle size={18} className="text-emerald-500" />
-                          ) : (
-                            <div className="w-[18px] h-[18px] border-2 border-gray-300 rounded-full"></div>
-                          )}
-                        </div>
-                        <div className="flex-1">
-                          <div className="flex items-start justify-between">
-                            <p className={`text-sm ${lesson.completed ? 'text-gray-500' : 'text-gray-800'}`}>
-                              {lesson.title}
-                            </p>
-                            <div className="flex items-center ml-2">
-                              {lesson.type === 'video' && <PlayCircle size={16} className="text-blue-500" />}
-                              {lesson.type === 'practice' && <Book size={16} className="text-purple-500" />}
-                              {lesson.type === 'quiz' && <Award size={16} className="text-orange-500" />}
-                            </div>
-                          </div>
-                          <p className="text-xs text-gray-500">{lesson.duration}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
+
+          {/* Quick Notes */}
+          {showNotes && (
+            <div className="bg-gray-800 p-4 border-t border-gray-700">
+              <h3 className="font-semibold mb-3 flex items-center">
+                <Coffee size={18} className="mr-2 text-orange-400" />
+                Quick Notes
+              </h3>
+              <div className="flex gap-2 mb-4">
+                <input
+                  type="text"
+                  value={currentNote}
+                  onChange={(e) => setCurrentNote(e.target.value)}
+                  placeholder="Jot down a quick thought..."
+                  className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
+                  onKeyPress={(e) => e.key === 'Enter' && addQuickNote()}
+                />
+                <button 
+                  onClick={addQuickNote}
+                  className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
+                >
+                  Add
+                </button>
+              </div>
+              {quickNotes.filter(note => note.lessonId === currentLesson?.id).map(note => (
+                <div key={note.id} className="bg-gray-700 p-3 rounded-lg mb-2">
+                  <p className="text-sm">{note.content}</p>
+                  <span className="text-xs text-gray-400">@ {note.timestamp}</span>
                 </div>
               ))}
             </div>
-          </div>
-        </aside>
-        
-        {/* Main Content Area */}
-        <main className={`flex-1 flex flex-col bg-white overflow-hidden transition-all duration-300 ease-in-out ${showNotes ? 'md:max-w-[calc(100%-24rem)]' : ''}`}>
-          {/* Lesson Content */}
-          <div className="flex-1 overflow-y-auto p-4 md:p-6">
-            {currentLesson && (
-              <>
-                <div className="mb-6">
-                  <div className="text-sm text-gray-500 mb-1">
-                    Section {currentSectionIndex + 1}, Lesson {currentLessonIndex + 1}
-                  </div>
-                  <h1 className="text-2xl font-bold text-gray-800 mb-2">{currentLesson.title}</h1>
-                  <div className="flex items-center text-gray-500 text-sm">
-                    <Clock size={16} className="mr-1" />
-                    <span>{currentLesson.duration}</span>
-                    <span className="mx-2">•</span>
-                    {currentLesson.type === 'video' && <span className="flex items-center"><PlayCircle size={16} className="mr-1 text-blue-500" /> Video Lesson</span>}
-                    {currentLesson.type === 'practice' && <span className="flex items-center"><Book size={16} className="mr-1 text-purple-500" /> Practice Exercise</span>}
-                    {currentLesson.type === 'quiz' && <span className="flex items-center"><Award size={16} className="mr-1 text-orange-500" /> Quiz</span>}
-                  </div>
-                </div>
-                
-                {/* Video Content */}
-                {currentLesson.type === 'video' && (
-                  <div className="mb-8">
-                    <div className="bg-gray-900 rounded-lg aspect-video flex items-center justify-center mb-6">
-                      <PlayCircle size={64} className="text-white opacity-80" />
-                    </div>
-                    
-                    <div className="prose max-w-none">
-                      <h2 className="text-xl font-semibold mb-3">About this lesson</h2>
-                      <p>{currentLesson.description}</p>
-                      
-                      {currentLesson.resources && currentLesson.resources.length > 0 && (
-                        <>
-                          <h3 className="font-semibold mt-6 mb-2">Lesson Resources</h3>
-                          <ul className="space-y-2">
-                            {currentLesson.resources.map((resource, idx) => (
-                              <li key={idx} className="flex items-center">
-                                <Download size={18} className="mr-2 text-emerald-600" />
-                                <a href={resource.url} className="text-emerald-600 hover:text-emerald-700">
-                                  {resource.title}
-                                </a>
-                              </li>
-                            ))}
-                          </ul>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                )}
-                
-                {/* Practice Exercise Content */}
-                {currentLesson.type === 'practice' && (
-                  <div className="mb-8">
-                    <div className="bg-purple-50 border border-purple-100 rounded-lg p-4 mb-6">
-                      <h2 className="text-lg font-semibold text-purple-800 mb-2">Practice Exercise</h2>
-                      <p className="text-purple-700 mb-4">{currentLesson.description}</p>
-                      <div className="bg-white border border-purple-200 rounded-lg p-4">
-                        <h3 className="font-semibold mb-2 text-gray-800">Instructions:</h3>
-                        <p className="text-gray-700">{currentLesson.instructions}</p>
-                      </div>
-                    </div>
-                    
-                    {currentLesson.codeTemplate && (
-                      <div className="mb-6">
-                        <h3 className="font-semibold mb-2">Starter Code:</h3>
-                        <div className="bg-gray-800 text-gray-200 p-4 rounded-lg overflow-x-auto">
-                          <pre className="text-sm font-mono">{currentLesson.codeTemplate}</pre>
-                        </div>
-                      </div>
-                    )}
-                    
-                    <div className="mb-6">
-                      <h3 className="font-semibold mb-2">Your Solution:</h3>
-                      <textarea 
-                        className="w-full h-64 p-4 border border-gray-300 rounded-lg font-mono text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                        placeholder="Write your code here..."
-                      ></textarea>
-                    </div>
-                    
-                    <div className="flex flex-wrap gap-3">
-                      <button className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md font-medium">
-                        Submit Solution
-                      </button>
-                      <button className="bg-white border border-purple-600 text-purple-600 hover:bg-purple-50 px-4 py-2 rounded-md font-medium">
-                        Preview Result
-                      </button>
-                    </div>
-                  </div>
-                )}
-                
-                {/* Quiz Content */}
-                {currentLesson.type === 'quiz' && (
-                  <div className="mb-8">
-                    <div className="bg-orange-50 border border-orange-100 rounded-lg p-4 mb-6">
-                      <h2 className="text-lg font-semibold text-orange-800 mb-2">Quiz: {currentLesson.title}</h2>
-                      <p className="text-orange-700">{currentLesson.description}</p>
-                    </div>
-                    
-                    {currentLesson.questions && currentLesson.questions.map((q, qIdx) => (
-                      <div key={qIdx} className="mb-6 border border-gray-200 rounded-lg p-4">
-                        <h3 className="font-semibold mb-3">Question {qIdx + 1}:</h3>
-                        <p className="mb-4">{q.question}</p>
-                        
-                        <div className="space-y-2">
-                          {q.options.map((option, oIdx) => (
-                            <label key={oIdx} className="flex items-center p-3 border border-gray-200 rounded-lg hover:bg-gray-50 cursor-pointer">
-                              <input 
-                                type="radio" 
-                                name={`question-${qIdx}`} 
-                                className="mr-3"
-                              />
-                              <span>{option}</span>
-                            </label>
-                          ))}
-                        </div>
-                      </div>
-                    ))}
-                    
-                    <button className="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-md font-medium">
-                      Submit Quiz
-                    </button>
-                  </div>
-                )}
-              </>
-            )}
-          </div>
-          
-          {/* Bottom Navigation */}
-          <div className="border-t border-gray-200 p-4 bg-gray-50">
-            <div className="flex items-center justify-between">
-              <button 
-                onClick={goToPrevLesson}
-                disabled={currentSectionIndex === 0 && currentLessonIndex === 0}
-                className={`flex items-center px-4 py-2 rounded-md font-medium ${
-                  currentSectionIndex === 0 && currentLessonIndex === 0
-                    ? 'text-gray-400 cursor-not-allowed'
-                    : 'text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                <ChevronLeft size={20} className="mr-1" />
-                Previous Lesson
-              </button>
-              
-              <div className="hidden md:block">
-                {!currentLesson?.completed && (
-                  <button 
-                    onClick={markAsComplete}
-                    className="flex items-center bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md font-medium"
-                  >
-                    <CheckSquare size={20} className="mr-2" />
-                    Mark as Complete
-                  </button>
-                )}
-              </div>
-              
-              <button 
-                onClick={goToNextLesson}
-                disabled={currentSectionIndex === courseData.curriculum.length - 1 && 
-                  currentLessonIndex === courseData.curriculum[courseData.curriculum.length - 1].lessons.length - 1}
-                className={`flex items-center px-4 py-2 rounded-md font-medium ${
-                  currentSectionIndex === courseData.curriculum.length - 1 && 
-                  currentLessonIndex === courseData.curriculum[courseData.curriculum.length - 1].lessons.length - 1
-                    ? 'text-gray-400 cursor-not-allowed'
-                    : 'text-gray-700 hover:bg-gray-200'
-                }`}
-              >
-                Next Lesson
-                <ChevronRight size={20} className="ml-1" />
-              </button>
-            </div>
-            
-            <div className="md:hidden mt-4">
-              {!currentLesson?.completed && (
-                <button 
-                  onClick={markAsComplete}
-                  className="w-full flex items-center justify-center bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md font-medium"
-                >
-                  <CheckSquare size={20} className="mr-2" />
-                  Mark as Complete
-                </button>
-              )}
-            </div>
-          </div>
-        </main>
-        
-        {/* Notes Panel */}
-        {showNotes && (
-          <aside className="hidden md:block bg-white border-l border-gray-200 w-96 flex-shrink-0 overflow-y-auto">
-            <div className="p-4 border-b border-gray-200">
-              <h2 className="font-medium text-gray-800 flex items-center">
-                <FileText size={18} className="mr-2" />
-                Notes for this lesson
+          )}
+        </div>
+
+        {/* Playlist Sidebar */}
+        {showPlaylist && (
+          <div className="fixed md:absolute right-0 top-0 h-full w-full md:w-96 bg-gray-900 border-l border-gray-700 z-40 overflow-y-auto">
+            <div className="p-4 border-b border-gray-700 flex items-center justify-between">
+              <h2 className="font-semibold flex items-center">
+                <BookOpen size={18} className="mr-2" />
+                Course Playlist
               </h2>
+              <button 
+                onClick={() => setShowPlaylist(false)}
+                className="md:hidden text-gray-400 hover:text-white"
+              >
+                <X size={20} />
+              </button>
             </div>
             
-            <div className="p-4">
-              <textarea
-                className="w-full h-32 p-3 border border-gray-300 rounded-lg mb-3 focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
-                placeholder="Add notes for this lesson..."
-                value={noteContent}
-                onChange={(e) => setNoteContent(e.target.value)}
-              ></textarea>
-              
-              <button 
-                onClick={saveNote}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-md font-medium mb-6"
-              >
-                Save Note
-              </button>
-              
-              {currentLessonNotes.length > 0 ? (
-                <div className="space-y-4">
-                  {currentLessonNotes.map(note => (
-                    <div key={note.id} className="bg-gray-50 border border-gray-200 rounded-lg p-3">
-                      <p className="text-gray-800 mb-2">{note.content}</p>
-                      <div className="text-xs text-gray-500 flex items-center">
-                        <Clock size={12} className="mr-1" />
-                        {formatTime(note.timestamp)}
+            {/* Progress Overview */}
+            <div className="p-4 border-b border-gray-700">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-sm text-gray-400">Your Progress</span>
+                <span className="text-sm font-medium">{Math.round((completedLessons/totalLessons)*100)}%</span>
+              </div>
+              <div className="w-full bg-gray-700 rounded-full h-2">
+                <div 
+                  className="bg-gradient-to-r from-green-500 to-blue-500 h-2 rounded-full transition-all"
+                  style={{ width: `${(completedLessons/totalLessons)*100}%` }}
+                ></div>
+              </div>
+            </div>
+
+            {/* Lesson List */}
+            <div className="p-2">
+              {courseData.curriculum.map((section, sectionIdx) => (
+                <div key={sectionIdx} className="mb-4">
+                  <div className="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-800 rounded-lg mb-2">
+                    {section.title}
+                  </div>
+                  {section.lessons.map((lesson, lessonIdx) => (
+                    <div
+                      key={lessonIdx}
+                      onClick={() => navigateToLesson(sectionIdx, lessonIdx)}
+                      className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors mb-1 ${
+                        currentSectionIndex === sectionIdx && currentLessonIndex === lessonIdx
+                          ? 'bg-red-600/20 border border-red-500/30'
+                          : 'hover:bg-gray-800'
+                      }`}
+                    >
+                      <div className="mr-3">
+                        {lesson.completed ? (
+                          <CheckCircle2 size={16} className="text-green-500" />
+                        ) : (
+                          <div className="w-4 h-4 border-2 border-gray-500 rounded-full"></div>
+                        )}
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <p className={`text-sm font-medium truncate ${
+                          lesson.completed ? 'text-gray-400 line-through' : 'text-white'
+                        }`}>
+                          {lesson.title}
+                        </p>
+                        <div className="flex items-center text-xs text-gray-500 mt-1">
+                          <Clock size={12} className="mr-1" />
+                          {lesson.duration}
+                          <span className={`ml-2 px-2 py-0.5 rounded text-xs ${getDifficultyColor(lesson.difficulty)}`}>
+                            {lesson.difficulty}
+                          </span>
+                        </div>
                       </div>
                     </div>
                   ))}
                 </div>
-              ) : (
-                <div className="text-center py-8 text-gray-500">
-                  <BookOpen size={32} className="mx-auto mb-2 opacity-40" />
-                  <p>No notes yet for this lesson</p>
-                </div>
-              )}
+              ))}
             </div>
-          </aside>
+          </div>
         )}
       </div>
     </div>
