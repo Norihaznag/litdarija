@@ -1,287 +1,215 @@
 "use client";
 import { useState, useEffect } from 'react';
 import { 
-  ChevronLeft, 
-  ChevronRight, 
-  PlayCircle, 
   Play,
   Pause,
   SkipForward,
   SkipBack,
+  CheckCircle2,
+  Clock,
   Volume2,
   Settings,
   Maximize,
-  CheckCircle2,
-  Clock,
-  Zap,
-  Menu,
-  X,
   ThumbsUp,
+  ThumbsDown,
   Share,
-  Download,
-  BookOpen,
-  FileText,
-  Star,
-  Coffee,
-  Target,
-  Award,
-  TrendingUp
+  MoreHorizontal,
+  List,
+  X,
+  ChevronRight,
+  ChevronDown,
+  Menu
 } from 'lucide-react';
 
-// Mock course data
+// Course data
 const courseData = {
   title: "Complete React Mastery Course",
   instructor: {
     name: "Sarah Chen",
-    image: "/api/placeholder/40/40"
+    subscribers: "184K subscribers",
+    avatar: "/api/placeholder/40/40"
   },
-  curriculum: [
-    {
-      title: "Getting Started",
-      lessons: [
-        {
-          id: 1,
-          title: "What is React?",
-          duration: "5:30",
-          type: "video",
-          completed: true,
-          description: "Learn the basics of React and why it's so popular",
-          difficulty: "Beginner",
-          keyPoints: ["Components", "Virtual DOM", "JSX"]
-        },
-        {
-          id: 2,
-          title: "Setting up your environment",
-          duration: "8:45",
-          type: "video",
-          completed: false,
-          description: "Get your development environment ready",
-          difficulty: "Beginner",
-          keyPoints: ["Node.js", "Create React App", "VS Code"]
-        }
-      ]
-    },
-    {
-      title: "Core Concepts",
-      lessons: [
-        {
-          id: 3,
-          title: "Components & Props",
-          duration: "12:20",
-          type: "video",
-          completed: false,
-          description: "Master the building blocks of React",
-          difficulty: "Intermediate",
-          keyPoints: ["Functional Components", "Props", "Reusability"]
-        },
-        {
-          id: 4,
-          title: "State & Events",
-          duration: "15:30",
-          type: "video",
-          completed: false,
-          description: "Handle user interactions and dynamic data",
-          difficulty: "Intermediate",
-          keyPoints: ["useState", "Event Handlers", "State Updates"]
-        }
-      ]
-    }
-  ]
+  currentVideo: {
+    title: "Create a project with React — Course part 1",
+    views: "40K views",
+    uploadDate: "2 years ago"
+  },
+  playlist: {
+    title: "React Mastery (2023)",
+    author: "Codewithsarah",
+    currentIndex: 1,
+    totalVideos: 23,
+    videos: [
+      { id: 1, title: "Create a project with React — Course part 1", duration: "11:36", current: true, completed: false },
+      { id: 2, title: "Webhooks with React — Course part 2", duration: "5:35", current: false, completed: false },
+      { id: 3, title: "Self-host with React — Course part 3", duration: "5:57", current: false, completed: false },
+      { id: 4, title: "Learn React — Full course for beginners [3 hours...]", duration: "2:55:24", current: false, completed: false },
+      { id: 5, title: "Building a Full-Stack Web App with Next.js 13 and...", duration: "51:53", current: false, completed: false },
+      { id: 6, title: "Tables with React — Course part 6", duration: "14:39", current: false, completed: false },
+      { id: 7, title: "Authentication with React — Course part 7", duration: "18:42", current: false, completed: false },
+      { id: 8, title: "Deployment Strategies — Course part 8", duration: "22:15", current: false, completed: false }
+    ]
+  }
 };
 
-export default function EnhancedCourseLearningPage() {
-  const [currentSectionIndex, setCurrentSectionIndex] = useState(0);
-  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+export default function ResponsiveCoursePlayer() {
   const [isPlaying, setIsPlaying] = useState(false);
-  const [showPlaylist, setShowPlaylist] = useState(false);
-  const [playbackSpeed, setPlaybackSpeed] = useState(1);
-  const [isFullscreen, setIsFullscreen] = useState(false);
-  const [progress, setProgress] = useState(0);
-  const [showNotes, setShowNotes] = useState(false);
-  const [quickNotes, setQuickNotes] = useState([]);
-  const [currentNote, setCurrentNote] = useState('');
+  const [currentTime, setCurrentTime] = useState("0:33");
+  const [duration] = useState("11:36");
+  const [progress, setProgress] = useState(5);
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0);
+  const [showPlaylist, setShowPlaylist] = useState(false); // Default closed on mobile
+  const [showControls, setShowControls] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
-  const currentSection = courseData.curriculum[currentSectionIndex];
-  const currentLesson = currentSection?.lessons[currentLessonIndex];
-  
-  const totalLessons = courseData.curriculum.reduce((acc, section) => acc + section.lessons.length, 0);
-  const completedLessons = courseData.curriculum.reduce((acc, section) => {
-    return acc + section.lessons.filter(lesson => lesson.completed).length;
-  }, 0);
-
-  const navigateToLesson = (sectionIndex, lessonIndex) => {
-    setCurrentSectionIndex(sectionIndex);
-    setCurrentLessonIndex(lessonIndex);
-    setShowPlaylist(false);
-    setProgress(0);
-  };
-
-  const goToNextLesson = () => {
-    if (currentLessonIndex < currentSection.lessons.length - 1) {
-      setCurrentLessonIndex(currentLessonIndex + 1);
-    } else if (currentSectionIndex < courseData.curriculum.length - 1) {
-      setCurrentSectionIndex(currentSectionIndex + 1);
-      setCurrentLessonIndex(0);
-    }
-    setProgress(0);
-  };
-
-  const goToPrevLesson = () => {
-    if (currentLessonIndex > 0) {
-      setCurrentLessonIndex(currentLessonIndex - 1);
-    } else if (currentSectionIndex > 0) {
-      setCurrentSectionIndex(currentSectionIndex - 1);
-      setCurrentLessonIndex(courseData.curriculum[currentSectionIndex - 1].lessons.length - 1);
-    }
-    setProgress(0);
-  };
-
-  const markComplete = () => {
-    currentLesson.completed = true;
-    goToNextLesson();
-  };
-
-  const addQuickNote = () => {
-    if (currentNote.trim()) {
-      setQuickNotes([...quickNotes, {
-        id: Date.now(),
-        content: currentNote,
-        timestamp: `${Math.floor(progress/60)}:${(progress%60).toString().padStart(2, '0')}`,
-        lessonId: currentLesson.id
-      }]);
-      setCurrentNote('');
-    }
-  };
-
-  const speedOptions = [0.5, 0.75, 1, 1.25, 1.5, 2];
-
-  // Auto-progress simulation
+  // Check if mobile on mount and resize
   useEffect(() => {
-    let interval;
-    if (isPlaying) {
-      interval = setInterval(() => {
-        setProgress(prev => {
-          const newProgress = prev + 1;
-          const totalSeconds = parseInt(currentLesson?.duration.split(':')[0]) * 60 + parseInt(currentLesson?.duration.split(':')[1]);
-          return newProgress >= totalSeconds ? totalSeconds : newProgress;
-        });
-      }, 1000 / playbackSpeed);
-    }
-    return () => clearInterval(interval);
-  }, [isPlaying, playbackSpeed, currentLesson]);
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+      // Auto-close playlist on mobile
+      if (window.innerWidth < 768) {
+        setShowPlaylist(false);
+      }
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  const currentVideo = courseData.playlist.videos[currentVideoIndex];
+
+  const playVideo = (index) => {
+    setCurrentVideoIndex(index);
+    courseData.playlist.videos.forEach((video, i) => {
+      video.current = i === index;
+    });
+    setIsPlaying(false);
+    setProgress(0);
+    setCurrentTime("0:00");
+    // Close playlist on mobile after selection
+    if (isMobile) {
+      setShowPlaylist(false);
+    }
   };
 
-  const getDifficultyColor = (difficulty) => {
-    switch (difficulty) {
-      case 'Beginner': return 'bg-green-100 text-green-800';
-      case 'Intermediate': return 'bg-yellow-100 text-yellow-800';
-      case 'Advanced': return 'bg-red-100 text-red-800';
-      default: return 'bg-gray-100 text-gray-800';
+  const nextVideo = () => {
+    if (currentVideoIndex < courseData.playlist.videos.length - 1) {
+      playVideo(currentVideoIndex + 1);
     }
+  };
+
+  const prevVideo = () => {
+    if (currentVideoIndex > 0) {
+      playVideo(currentVideoIndex - 1);
+    }
+  };
+
+  const togglePlaylist = () => {
+    setShowPlaylist(!showPlaylist);
   };
 
   return (
     <div className="min-h-screen bg-black text-white">
-      {/* YouTube-style Header */}
-      <header className="bg-black border-b border-gray-800 sticky top-0 z-50">
-        <div className="flex items-center justify-between px-4 py-3">
-          <div className="flex items-center space-x-4">
-            <button 
-              onClick={() => setShowPlaylist(!showPlaylist)}
-              className="text-white hover:text-red-400 transition-colors"
-            >
-              <Menu size={24} />
-            </button>
-            <div className="text-white font-semibold truncate max-w-xs md:max-w-md">
-              {currentLesson?.title}
+      {/* Responsive Header */}
+      <header className="bg-black border-b border-gray-800 px-3 sm:px-6 py-3 sticky top-0 z-50">
+        <div className="flex items-center justify-between max-w-7xl mx-auto">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gray-700 rounded-lg flex items-center justify-center">
+              <Play size={isMobile ? 12 : 16} fill="white" />
             </div>
+            <span className="text-base sm:text-lg font-medium hidden sm:block">Course Player</span>
+            <span className="text-sm font-medium sm:hidden">Player</span>
           </div>
           
-          <div className="flex items-center space-x-3">
-            <div className="hidden md:flex items-center space-x-2 text-sm text-gray-300">
-              <TrendingUp size={16} />
-              <span>{completedLessons}/{totalLessons} completed</span>
-            </div>
-            <button 
-              onClick={() => setShowNotes(!showNotes)}
-              className="text-white hover:text-red-400 transition-colors"
-            >
-              <FileText size={20} />
-            </button>
+          {/* Responsive search - hidden on small mobile */}
+          <div className="flex-1 max-w-xs sm:max-w-md mx-2 sm:mx-8 hidden xs:block">
+            <input 
+              type="text" 
+              placeholder="Search..." 
+              className="w-full bg-gray-900 border-0 rounded-lg px-3 sm:px-4 py-2 text-sm sm:text-base text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-gray-600"
+            />
           </div>
+          
+          <button 
+            onClick={togglePlaylist}
+            className="flex items-center space-x-1 sm:space-x-2 px-2 sm:px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors"
+          >
+            <List size={isMobile ? 14 : 16} />
+            <span className="text-xs sm:text-sm hidden sm:block">Playlist</span>
+          </button>
         </div>
       </header>
 
-      <div className="flex">
-        {/* Main Video Area */}
-        <div className={`flex-1 ${showPlaylist ? 'md:pr-96' : ''}`}>
-          {/* Video Player */}
-          <div className="relative bg-black">
-            <div className="aspect-video bg-gradient-to-br from-gray-900 to-black flex items-center justify-center relative group">
-              {/* Video Placeholder */}
-              <div className="absolute inset-0 bg-gradient-to-br from-red-900/20 to-purple-900/20"></div>
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-2 sm:gap-4 p-2 sm:p-4">
+        {/* Main Video Section */}
+        <div className="flex-1 w-full">
+          {/* Video Player - Fully responsive */}
+          <div className="bg-gray-900 rounded-lg sm:rounded-xl overflow-hidden mb-3 sm:mb-4 shadow-2xl">
+            <div 
+              className="aspect-video bg-gradient-to-br from-gray-800 to-black flex items-center justify-center relative group cursor-pointer"
+              onMouseEnter={() => !isMobile && setShowControls(true)}
+              onMouseLeave={() => !isMobile && setShowControls(false)}
+              onTouchStart={() => setShowControls(true)}
+            >
+              {/* Simplified video background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900/10 to-green-900/10"></div>
               
-              {/* Play Button */}
+              {/* Content indicator - responsive sizing */}
+              <div className="absolute inset-0 flex items-center justify-center p-4">
+                <div className="bg-black/30 backdrop-blur-sm p-4 sm:p-6 rounded-xl sm:rounded-2xl text-center border border-gray-700/50 max-w-sm">
+                  <h3 className="text-lg sm:text-xl font-semibold mb-2 text-gray-100">React Course</h3>
+                  <p className="text-gray-400 text-xs sm:text-sm">Interactive Learning Experience</p>
+                </div>
+              </div>
+              
+              {/* Responsive play button */}
               <button 
                 onClick={() => setIsPlaying(!isPlaying)}
-                className="relative z-10 bg-red-600 hover:bg-red-700 rounded-full p-4 transition-all transform hover:scale-110"
+                className="relative z-10 bg-white/10 backdrop-blur-sm hover:bg-white/20 rounded-full p-4 sm:p-6 transition-all transform hover:scale-105 active:scale-95 border border-white/20"
               >
-                {isPlaying ? <Pause size={32} /> : <Play size={32} />}
+                {isPlaying ? (
+                  <Pause size={isMobile ? 24 : 32} className="text-white" />
+                ) : (
+                  <Play size={isMobile ? 24 : 32} className="text-white ml-1" />
+                )}
               </button>
 
-              {/* Video Controls */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                {/* Progress Bar */}
-                <div className="w-full bg-gray-600 h-1 rounded-full mb-4">
+              {/* Responsive Controls */}
+              <div className={`absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 to-transparent p-3 sm:p-6 transition-opacity duration-300 ${showControls || isMobile ? 'opacity-100' : 'opacity-0'}`}>
+                {/* Progress bar */}
+                <div className="w-full bg-gray-700/50 h-1 rounded-full mb-3 sm:mb-4 cursor-pointer">
                   <div 
-                    className="bg-red-600 h-1 rounded-full transition-all"
-                    style={{ width: `${(progress / (parseInt(currentLesson?.duration.split(':')[0]) * 60 + parseInt(currentLesson?.duration.split(':')[1]))) * 100}%` }}
+                    className="bg-white h-1 rounded-full transition-all"
+                    style={{ width: `${progress}%` }}
                   ></div>
                 </div>
 
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center space-x-4">
-                    <button onClick={() => setIsPlaying(!isPlaying)}>
-                      {isPlaying ? <Pause size={20} /> : <Play size={20} />}
+                  <div className="flex items-center space-x-2 sm:space-x-4">
+                    <button 
+                      onClick={() => setIsPlaying(!isPlaying)}
+                      className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors"
+                    >
+                      {isPlaying ? <Pause size={isMobile ? 16 : 18} /> : <Play size={isMobile ? 16 : 18} />}
                     </button>
-                    <button onClick={goToPrevLesson}>
-                      <SkipBack size={20} />
+                    <button 
+                      onClick={nextVideo}
+                      className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors"
+                    >
+                      <SkipForward size={isMobile ? 16 : 18} />
                     </button>
-                    <button onClick={goToNextLesson}>
-                      <SkipForward size={20} />
-                    </button>
-                    <Volume2 size={20} />
-                    <span className="text-sm">
-                      {formatTime(progress)} / {currentLesson?.duration}
-                    </span>
-                  </div>
-
-                  <div className="flex items-center space-x-4">
-                    <div className="relative group">
-                      <button className="flex items-center space-x-1 text-sm hover:text-red-400">
-                        <span>{playbackSpeed}x</span>
-                      </button>
-                      <div className="absolute bottom-full right-0 mb-2 bg-gray-800 rounded-lg p-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                        {speedOptions.map(speed => (
-                          <button
-                            key={speed}
-                            onClick={() => setPlaybackSpeed(speed)}
-                            className={`block w-full text-left px-3 py-1 rounded text-sm hover:bg-gray-700 ${
-                              playbackSpeed === speed ? 'text-red-400' : ''
-                            }`}
-                          >
-                            {speed}x
-                          </button>
-                        ))}
-                      </div>
+                    <div className="flex items-center space-x-1 sm:space-x-2">
+                      <Volume2 size={isMobile ? 12 : 16} />
+                      <span className="text-xs sm:text-sm font-mono">{currentTime} / {duration}</span>
                     </div>
-                    <button onClick={() => setIsFullscreen(!isFullscreen)}>
-                      <Maximize size={20} />
+                  </div>
+                  <div className="flex items-center space-x-1 sm:space-x-2">
+                    <button className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors">
+                      <Settings size={isMobile ? 14 : 16} />
+                    </button>
+                    <button className="p-1.5 sm:p-2 hover:bg-white/10 rounded-lg transition-colors">
+                      <Maximize size={isMobile ? 14 : 16} />
                     </button>
                   </div>
                 </div>
@@ -289,189 +217,169 @@ export default function EnhancedCourseLearningPage() {
             </div>
           </div>
 
-          {/* Video Info */}
-          <div className="p-6 bg-gray-900">
-            <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
-              <div className="flex-1">
-                <h1 className="text-xl md:text-2xl font-bold mb-2">{currentLesson?.title}</h1>
-                <div className="flex flex-wrap items-center gap-3 text-sm text-gray-400 mb-4">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${getDifficultyColor(currentLesson?.difficulty)}`}>
-                    {currentLesson?.difficulty}
-                  </span>
-                  <div className="flex items-center">
-                    <Clock size={16} className="mr-1" />
-                    {currentLesson?.duration}
-                  </div>
-                  <div className="flex items-center">
-                    <Target size={16} className="mr-1" />
-                    Section {currentSectionIndex + 1}, Lesson {currentLessonIndex + 1}
-                  </div>
-                </div>
-                <p className="text-gray-300 mb-4">{currentLesson?.description}</p>
-                
-                {/* Key Points */}
-                {currentLesson?.keyPoints && (
-                  <div className="mb-4">
-                    <h3 className="font-semibold mb-2 flex items-center">
-                      <Zap size={16} className="mr-2 text-yellow-400" />
-                      Quick Takeaways
-                    </h3>
-                    <div className="flex flex-wrap gap-2">
-                      {currentLesson.keyPoints.map((point, idx) => (
-                        <span key={idx} className="bg-gray-800 px-3 py-1 rounded-full text-sm">
-                          {point}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
+          {/* Responsive Video Info */}
+          <div className="space-y-3 sm:space-y-4 px-1 sm:px-0">
+            <h1 className="text-lg sm:text-xl font-semibold text-gray-100 leading-tight">
+              {courseData.currentVideo.title}
+            </h1>
+            
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
+              <div className="text-sm text-gray-500">
+                {courseData.currentVideo.views} • {courseData.currentVideo.uploadDate}
               </div>
-            </div>
-
-            {/* Action Buttons */}
-            <div className="flex flex-wrap gap-3 mb-6">
-              <button 
-                onClick={markComplete}
-                className="bg-green-600 hover:bg-green-700 px-6 py-2 rounded-full font-medium transition-colors flex items-center"
-              >
-                <CheckCircle2 size={18} className="mr-2" />
-                Mark Complete
-              </button>
-              <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition-colors flex items-center">
-                <ThumbsUp size={18} className="mr-2" />
-                Like
-              </button>
-              <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition-colors flex items-center">
-                <Share size={18} className="mr-2" />
-                Share
-              </button>
-              <button className="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-full transition-colors flex items-center">
-                <Download size={18} className="mr-2" />
-                Resources
-              </button>
-            </div>
-
-            {/* Instructor Info */}
-            <div className="border-t border-gray-700 pt-4">
-              <div className="flex items-center">
-                <img 
-                  src={courseData.instructor.image} 
-                  alt={courseData.instructor.name}
-                  className="w-12 h-12 rounded-full mr-4"
-                />
-                <div>
-                  <p className="font-semibold">{courseData.instructor.name}</p>
-                  <p className="text-sm text-gray-400">Instructor</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Quick Notes */}
-          {showNotes && (
-            <div className="bg-gray-800 p-4 border-t border-gray-700">
-              <h3 className="font-semibold mb-3 flex items-center">
-                <Coffee size={18} className="mr-2 text-orange-400" />
-                Quick Notes
-              </h3>
-              <div className="flex gap-2 mb-4">
-                <input
-                  type="text"
-                  value={currentNote}
-                  onChange={(e) => setCurrentNote(e.target.value)}
-                  placeholder="Jot down a quick thought..."
-                  className="flex-1 bg-gray-700 border border-gray-600 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-red-500"
-                  onKeyPress={(e) => e.key === 'Enter' && addQuickNote()}
-                />
-                <button 
-                  onClick={addQuickNote}
-                  className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors"
-                >
-                  Add
+              <div className="flex items-center space-x-2">
+                <button className="flex items-center space-x-2 px-3 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors text-sm">
+                  <ThumbsUp size={14} />
+                  <span>559</span>
+                </button>
+                <button className="p-2 bg-gray-800 hover:bg-gray-700 rounded-lg transition-colors">
+                  <Share size={14} />
                 </button>
               </div>
-              {quickNotes.filter(note => note.lessonId === currentLesson?.id).map(note => (
-                <div key={note.id} className="bg-gray-700 p-3 rounded-lg mb-2">
-                  <p className="text-sm">{note.content}</p>
-                  <span className="text-xs text-gray-400">@ {note.timestamp}</span>
-                </div>
-              ))}
             </div>
-          )}
-        </div>
 
-        {/* Playlist Sidebar */}
-        {showPlaylist && (
-          <div className="fixed md:absolute right-0 top-0 h-full w-full md:w-96 bg-gray-900 border-l border-gray-700 z-40 overflow-y-auto">
-            <div className="p-4 border-b border-gray-700 flex items-center justify-between">
-              <h2 className="font-semibold flex items-center">
-                <BookOpen size={18} className="mr-2" />
-                Course Playlist
-              </h2>
-              <button 
-                onClick={() => setShowPlaylist(false)}
-                className="md:hidden text-gray-400 hover:text-white"
-              >
-                <X size={20} />
+            {/* Responsive Channel Info */}
+            <div className="flex items-center justify-between p-3 sm:p-4 bg-gray-900/50 rounded-lg sm:rounded-xl">
+              <div className="flex items-center space-x-3">
+                <div className="w-8 h-8 sm:w-10 sm:h-10 bg-gray-700 rounded-full flex items-center justify-center">
+                  <span className="text-xs sm:text-sm font-medium">SC</span>
+                </div>
+                <div>
+                  <div className="font-medium text-gray-100 text-sm sm:text-base">{courseData.instructor.name}</div>
+                  <div className="text-xs sm:text-sm text-gray-500">{courseData.instructor.subscribers}</div>
+                </div>
+              </div>
+              <button className="bg-white text-black hover:bg-gray-200 px-3 sm:px-4 py-2 rounded-lg font-medium transition-colors text-xs sm:text-sm">
+                Follow
               </button>
             </div>
-            
-            {/* Progress Overview */}
-            <div className="p-4 border-b border-gray-700">
-              <div className="flex items-center justify-between mb-2">
-                <span className="text-sm text-gray-400">Your Progress</span>
-                <span className="text-sm font-medium">{Math.round((completedLessons/totalLessons)*100)}%</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-2">
-                <div 
-                  className="bg-gradient-to-r from-green-500 to-blue-500 h-2 rounded-full transition-all"
-                  style={{ width: `${(completedLessons/totalLessons)*100}%` }}
-                ></div>
-              </div>
-            </div>
+          </div>
+        </div>
 
-            {/* Lesson List */}
-            <div className="p-2">
-              {courseData.curriculum.map((section, sectionIdx) => (
-                <div key={sectionIdx} className="mb-4">
-                  <div className="px-3 py-2 text-sm font-medium text-gray-400 bg-gray-800 rounded-lg mb-2">
-                    {section.title}
+        {/* Responsive Playlist Sidebar/Modal */}
+        {isMobile ? (
+          // Mobile: Full-screen overlay
+          <div className={`fixed inset-0 z-50 transition-all duration-300 ${showPlaylist ? 'opacity-100 visible' : 'opacity-0 invisible'}`}>
+            <div className="absolute inset-0 bg-black/80 backdrop-blur-sm" onClick={togglePlaylist}></div>
+            <div className={`absolute bottom-0 left-0 right-0 bg-gray-900 rounded-t-xl max-h-[80vh] transition-transform duration-300 ${showPlaylist ? 'translate-y-0' : 'translate-y-full'}`}>
+              {/* Mobile Playlist Header */}
+              <div className="p-4 border-b border-gray-800/50 flex items-center justify-between">
+                <div>
+                  <h2 className="font-semibold text-gray-100">{courseData.playlist.title}</h2>
+                  <div className="text-sm text-gray-500">{courseData.playlist.author}</div>
+                  <div className="text-xs text-gray-600 mt-1">
+                    {courseData.playlist.currentIndex} of {courseData.playlist.totalVideos} videos
                   </div>
-                  {section.lessons.map((lesson, lessonIdx) => (
-                    <div
-                      key={lessonIdx}
-                      onClick={() => navigateToLesson(sectionIdx, lessonIdx)}
-                      className={`flex items-center p-3 rounded-lg cursor-pointer transition-colors mb-1 ${
-                        currentSectionIndex === sectionIdx && currentLessonIndex === lessonIdx
-                          ? 'bg-red-600/20 border border-red-500/30'
-                          : 'hover:bg-gray-800'
-                      }`}
-                    >
-                      <div className="mr-3">
-                        {lesson.completed ? (
-                          <CheckCircle2 size={16} className="text-green-500" />
-                        ) : (
-                          <div className="w-4 h-4 border-2 border-gray-500 rounded-full"></div>
-                        )}
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className={`text-sm font-medium truncate ${
-                          lesson.completed ? 'text-gray-400 line-through' : 'text-white'
-                        }`}>
-                          {lesson.title}
-                        </p>
-                        <div className="flex items-center text-xs text-gray-500 mt-1">
-                          <Clock size={12} className="mr-1" />
-                          {lesson.duration}
-                          <span className={`ml-2 px-2 py-0.5 rounded text-xs ${getDifficultyColor(lesson.difficulty)}`}>
-                            {lesson.difficulty}
-                          </span>
-                        </div>
+                </div>
+                <button 
+                  onClick={togglePlaylist}
+                  className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
+                >
+                  <X size={20} />
+                </button>
+              </div>
+
+              {/* Mobile Video List */}
+              <div className="overflow-y-auto max-h-[60vh]">
+                {courseData.playlist.videos.map((video, index) => (
+                  <div
+                    key={video.id}
+                    onClick={() => playVideo(index)}
+                    className={`flex items-center p-4 cursor-pointer transition-all hover:bg-gray-800/50 border-b border-gray-800/30 ${
+                      video.current 
+                        ? 'bg-gray-800/70 border-l-4 border-white' 
+                        : ''
+                    }`}
+                  >
+                    <div className="flex-shrink-0 mr-3">
+                      <div className="w-8 h-8 rounded bg-gray-700 flex items-center justify-center text-sm font-mono text-gray-400">
+                        {index + 1}
                       </div>
                     </div>
-                  ))}
+                    
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`text-sm font-medium mb-1 ${
+                        video.current ? 'text-white' : 'text-gray-300'
+                      }`}>
+                        {video.title}
+                      </h3>
+                      <div className="flex items-center text-xs text-gray-500">
+                        <span className="font-mono">{video.duration}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex-shrink-0 ml-2">
+                      {video.completed ? (
+                        <CheckCircle2 size={16} className="text-green-500" />
+                      ) : video.current ? (
+                        <div className="w-3 h-3 bg-white rounded-full"></div>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        ) : (
+          // Desktop: Sidebar
+          <div className={`transition-all duration-300 ${showPlaylist ? 'w-80 opacity-100' : 'w-0 opacity-0 overflow-hidden'}`}>
+            <div className="bg-gray-900/50 backdrop-blur-sm rounded-xl overflow-hidden border border-gray-800/50 h-fit sticky top-20">
+              {/* Desktop Playlist Header */}
+              <div className="p-4 border-b border-gray-800/50">
+                <div className="flex items-center justify-between mb-2">
+                  <h2 className="font-semibold text-gray-100">{courseData.playlist.title}</h2>
+                  <button 
+                    onClick={togglePlaylist}
+                    className="p-1 hover:bg-gray-800 rounded-lg transition-colors"
+                  >
+                    <X size={16} />
+                  </button>
                 </div>
-              ))}
+                <div className="text-sm text-gray-500">{courseData.playlist.author}</div>
+                <div className="text-xs text-gray-600 mt-1">
+                  {courseData.playlist.currentIndex} of {courseData.playlist.totalVideos} videos
+                </div>
+              </div>
+
+              {/* Desktop Video List */}
+              <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+                {courseData.playlist.videos.map((video, index) => (
+                  <div
+                    key={video.id}
+                    onClick={() => playVideo(index)}
+                    className={`flex items-center p-3 cursor-pointer transition-all hover:bg-gray-800/50 ${
+                      video.current 
+                        ? 'bg-gray-800/70 border-l-2 border-white' 
+                        : ''
+                    }`}
+                  >
+                    <div className="flex-shrink-0 mr-3">
+                      <div className="w-6 h-6 rounded bg-gray-700 flex items-center justify-center text-xs font-mono text-gray-400">
+                        {index + 1}
+                      </div>
+                    </div>
+                    
+                    <div className="flex-1 min-w-0">
+                      <h3 className={`text-sm font-medium line-clamp-2 mb-1 ${
+                        video.current ? 'text-white' : 'text-gray-300'
+                      }`}>
+                        {video.title}
+                      </h3>
+                      <div className="flex items-center text-xs text-gray-500">
+                        <span className="font-mono">{video.duration}</span>
+                      </div>
+                    </div>
+
+                    <div className="flex-shrink-0 ml-2">
+                      {video.completed ? (
+                        <CheckCircle2 size={14} className="text-green-500" />
+                      ) : video.current ? (
+                        <div className="w-2 h-2 bg-white rounded-full"></div>
+                      ) : null}
+                    </div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         )}
