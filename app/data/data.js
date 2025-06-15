@@ -117,6 +117,70 @@ export const coursedata = {
     }
   ]
 };
+
+
+export const coursEData = {
+  title: "Complete Web Development Bootcamp 2025",
+  instructor: {
+    name: "Ahmed Hassan",
+    image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face",
+    subscribers: "125K subscribers"
+  },
+  stats: {
+    views: "2.3M",
+    rating: 4.9,
+    students: "45K",
+    duration: "12 weeks",
+    lessons: 57,
+    updated: "2 days ago"
+  },
+  price: {
+    current: 299,
+    original: 899,
+    discount: 67
+  },
+  freeVideo: {
+    title: "Course Introduction - What You'll Build",
+    duration: "8:45",
+    views: "125K views",
+    uploadDate: "3 days ago"
+  },
+  playlist: {
+    title: "Complete Web Development Bootcamp",
+    totalVideos: 57,
+    totalDuration: "18+ hours",
+    videos: [
+      { id: 1, title: "Course Introduction - What You'll Build", duration: "8:45", free: true, completed: false },
+      { id: 2, title: "HTML Fundamentals & Document Structure", duration: "15:32", free: false, completed: false },
+      { id: 3, title: "CSS Styling & Layout Techniques", duration: "22:18", free: false, completed: false },
+      { id: 4, title: "JavaScript Basics & DOM Manipulation", duration: "28:45", free: false, completed: false },
+      { id: 5, title: "Responsive Design with Flexbox & Grid", duration: "19:56", free: false, completed: false },
+      { id: 6, title: "Introduction to React Framework", duration: "25:12", free: false, completed: false },
+      { id: 7, title: "State Management & Hooks", duration: "31:44", free: false, completed: false },
+      { id: 8, title: "Building Interactive Components", duration: "24:33", free: false, completed: false },
+      { id: 9, title: "API Integration & Fetch Requests", duration: "27:19", free: false, completed: false },
+      { id: 10, title: "Node.js Backend Development", duration: "35:21", free: false, completed: false },
+      { id: 11, title: "Database Design with MongoDB", duration: "29:14", free: false, completed: false },
+      { id: 12, title: "Authentication & Security", duration: "26:47", free: false, completed: false }
+    ]
+  },
+  highlights: [
+    "🎯 Build 12 real-world projects",
+    "⚡ Job-ready skills in 12 weeks", 
+    "🏆 Certificate of completion",
+    "💼 Career support included"
+  ],
+  includes: [
+    "57 HD video lessons (18+ hours)",
+    "12 hands-on coding projects",
+    "Source code & resources",
+    "Lifetime access to content",
+    "Mobile & desktop compatible",
+    "Certificate of completion",
+    "Direct instructor support",
+    "Job placement assistance"
+  ]
+};
 export const courseData = {
   id: 3,
   title: "Full Stack Web Development",

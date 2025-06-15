@@ -3,6 +3,7 @@ import { useState, useMemo, useCallback, memo, Suspense } from 'react';
 import { Search, Star, Clock, Users, Filter, Zap, Sparkles, TrendingUp, Play } from 'lucide-react';
 import { categories, levels, priceRanges, allCourses } from '../data/data';
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 
 // Memoized course card component
 const CourseCard = memo(({ course }) => (
@@ -57,9 +58,9 @@ const CourseCard = memo(({ course }) => (
         </span>
       </div>
 
-      <h3 className="text-xl font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-red-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
+      <Link  href={`courses/${course.slug}`} className="text-xl font-bold mb-2 text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-red-400 group-hover:to-pink-400 group-hover:bg-clip-text transition-all duration-300">
         {course.title}
-      </h3>
+      </Link>
       
       <p className="text-gray-400 mb-4">By {course.instructor}</p>
       <p className="text-gray-400 text-sm mb-4">{course.description}</p>
@@ -76,10 +77,10 @@ const CourseCard = memo(({ course }) => (
         </div>
       </div>
 
-      <button className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white py-3 rounded-full font-medium transition-all duration-300 flex items-center justify-center">
+      <Link href={`courses/${course.slug}`} className="w-full bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600 text-white py-3 rounded-full font-medium transition-all duration-300 flex items-center justify-center">
         <Play size={18} className="mr-2" />
         View Course
-      </button>
+      </Link>
     </div>
   </div>
 ));
